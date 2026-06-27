@@ -1,0 +1,331 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PUFF-CHAIN · Admin 后台管理</title>
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <svg width="20" height="20" viewBox="0 0 32 32"><rect x="4" y="8" width="24" height="18" rx="2" fill="none" stroke="#33eaff" stroke-width="1.5"/><path d="M12 26v2a1 1 0 001 1h6a1 1 0 001-1v-2" fill="none" stroke="#33eaff" stroke-width="1.5"/><path d="M16 4v4" stroke="#33eaff" stroke-width="1.5"/><circle cx="16" cy="12" r="6" fill="none" stroke="#33eaff" stroke-width="1"/><circle cx="16" cy="12" r="2" fill="#33eaff"/></svg>
+      <span>Admin</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" data-page="dashboard" class="active"><span class="icon">◈</span><span>仪表盘</span></a>
+      <a href="#" data-page="products"><span class="icon">⊞</span><span>产品管理</span></a>
+      <a href="#" data-page="orders"><span class="icon">☰</span><span>订单管理</span></a>
+      <a href="#" data-page="users"><span class="icon">◎</span><span>用户管理</span></a>
+      <a href="#" data-page="nft"><span class="icon">◇</span><span>NFT 管理</span></a>
+      <a href="#" data-page="partners"><span class="icon">⊕</span><span>合伙人管理</span></a>
+      <div class="divider"></div>
+      <a href="#" data-page="content"><span class="icon">✎</span><span>内容管理</span></a>
+      <a href="#" data-page="settings"><span class="icon">⚙</span><span>系统设置</span></a>
+      <div class="divider"></div>
+      <a href="../index.html" target="_blank"><span class="icon">↗</span><span>回主站</span></a>
+    </nav>
+  </aside>
+  <div class="main-content">
+    <div class="main-header">
+      <h1>PUFF-CHAIN <span>Admin</span></h1>
+      <div class="user-info">
+        <span id="data-time">--</span>
+        <div class="avatar">A</div>
+      </div>
+    </div>
+    <div id="alert-area"></div>
+    <!-- Dashboard -->
+    <div id="page-dashboard" class="page active">
+      <div class="page-title"><span>◈</span> 仪表盘</div>
+      <div class="page-subtitle">PUFF-CHAIN 平台运营数据总览</div>
+      <div class="stat-row" id="dash-stats">
+        <div class="stat-card"><div class="label">👥 注册用户</div><div class="value" id="ds-users">0</div><div class="change up">↑ +12 本周</div></div>
+        <div class="stat-card"><div class="label">📦 订单总数</div><div class="value" id="ds-orders">0</div><div class="change up">↑ +8 本周</div></div>
+        <div class="stat-card"><div class="label">🖼 NFT 铸造</div><div class="value" id="ds-nfts">0</div><div class="change up">↑ +3 本周</div></div>
+        <div class="stat-card"><div class="label">🪙 PUFF 流通量</div><div class="value" id="ds-puffs">0</div><div class="change up">↑ +1,280</div></div>
+        <div class="stat-card"><div class="label">🤝 合伙人申请</div><div class="value" id="ds-partners">0</div><div class="change down">待审核 0</div></div>
+        <div class="stat-card"><div class="label">💰 总收入</div><div class="value" id="ds-revenue">¥0</div><div class="change up">↑ +¥2,890</div></div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">📊 最近订单 <span class="accent">· 最新 5 条</span></div>
+          <div class="table-wrap"><table><thead><tr><th>订单号</th><th>用户</th><th>金额</th><th>状态</th></tr></thead><tbody id="dash-recent-orders"><tr><td colspan="4" style="text-align:center;color:var(--gray)">暂无订单数据</td></tr></tbody></table></div>
+        </div>
+        <div class="card">
+          <div class="card-title">📈 产品销量 TOP <span class="accent">· 按购买次数</span></div>
+          <div class="table-wrap"><table><thead><tr><th>产品</th><th>分类</th><th>销量</th></tr></thead><tbody id="dash-top-products"><tr><td colspan="3" style="text-align:center;color:var(--gray)">暂无销量数据</td></tr></tbody></table></div>
+        </div>
+      </div>
+    </div>
+    <!-- Products -->
+    <div id="page-products" class="page">
+      <div class="section-header">
+        <div><div class="page-title"><span>⊞</span> 产品管理</div><div class="page-subtitle">管理 puff2earn.com 商店中的所有产品</div></div>
+        <button class="btn btn-primary" onclick="openProductModal()">＋ 添加产品</button>
+      </div>
+      <div class="search-bar"><input type="text" id="prod-search" placeholder="搜索产品名称 / SKU..." oninput="renderProducts()"></div>
+      <div class="tabs" id="prod-cat-tabs">
+        <button class="tab-btn active" data-cat="all" onclick="switchProdCat('all')">全部</button>
+        <button class="tab-btn" data-cat="一次性" onclick="switchProdCat('一次性')">一次性</button>
+        <button class="tab-btn" data-cat="换弹" onclick="switchProdCat('换弹')">换弹</button>
+        <button class="tab-btn" data-cat="注油" onclick="switchProdCat('注油')">注油</button>
+        <button class="tab-btn" data-cat="烟油" onclick="switchProdCat('烟油')">烟油</button>
+      </div>
+      <div class="card"><div class="table-wrap"><table><thead><tr><th>ID</th><th>名称</th><th>分类</th><th>品牌</th><th>价格</th><th>库存</th><th>PUFF 奖励</th><th>状态</th><th>操作</th></tr></thead><tbody id="prod-table-body"></tbody></table></div></div>
+    </div>
+    <!-- Orders -->
+    <div id="page-orders" class="page">
+      <div class="section-header">
+        <div><div class="page-title"><span>☰</span> 订单管理</div><div class="page-subtitle">查看和管理所有平台订单</div></div>
+      </div>
+      <div class="tabs" id="order-tabs">
+        <button class="tab-btn active" data-o="all" onclick="switchOrderTab('all')">全部</button>
+        <button class="tab-btn" data-o="pending" onclick="switchOrderTab('pending')">待处理</button>
+        <button class="tab-btn" data-o="shipped" onclick="switchOrderTab('shipped')">已发货</button>
+        <button class="tab-btn" data-o="completed" onclick="switchOrderTab('completed')">已完成</button>
+        <button class="tab-btn" data-o="cancelled" onclick="switchOrderTab('cancelled')">已取消</button>
+      </div>
+      <div class="card"><div class="table-wrap"><table><thead><tr><th>订单号</th><th>用户</th><th>产品</th><th>数量</th><th>金额</th><th>PUFF</th><th>时间</th><th>状态</th><th>操作</th></tr></thead><tbody id="order-table-body"></tbody></table></div></div>
+    </div>
+    <!-- Users -->
+    <div id="page-users" class="page">
+      <div class="section-header">
+        <div><div class="page-title"><span>◎</span> 用户管理</div><div class="page-subtitle">平台用户列表与数字资产管理</div></div>
+      </div>
+      <div class="search-bar"><input type="text" id="user-search" placeholder="搜索用户名 / 钱包地址..." oninput="renderUsers()"></div>
+      <div class="card"><div class="table-wrap"><table><thead><tr><th>ID</th><th>用户名</th><th>邮箱</th><th>钱包</th><th>PUFF 余额</th><th>NFT</th><th>订单数</th><th>注册时间</th><th>操作</th></tr></thead><tbody id="user-table-body"></tbody></table></div></div>
+    </div>
+    <!-- NFT -->
+    <div id="page-nft" class="page">
+      <div class="section-header">
+        <div><div class="page-title"><span>◇</span> NFT 管理</div><div class="page-subtitle">管理所有数字藏品与铸造配置</div></div>
+        <button class="btn btn-primary" onclick="openNftModal()">＋ 添加 NFT</button>
+      </div>
+      <div class="card"><div class="table-wrap"><table><thead><tr><th>#</th><th>图标</th><th>名称</th><th>稀有度</th><th>估值</th><th>铸造费</th><th>总量</th><th>已铸</th><th>状态</th><th>操作</th></tr></thead><tbody id="nft-table-body"></tbody></table></div></div>
+    </div>
+    <!-- Partners -->
+    <div id="page-partners" class="page">
+      <div class="section-header">
+        <div><div class="page-title"><span>⊕</span> 合伙人管理</div><div class="page-subtitle">审核与管理系统合伙人申请</div></div>
+      </div>
+      <div class="tabs" id="partner-tabs">
+        <button class="tab-btn active" data-p="all" onclick="switchPartnerTab('all')">全部</button>
+        <button class="tab-btn" data-p="pending" onclick="switchPartnerTab('pending')">待审核</button>
+        <button class="tab-btn" data-p="approved" onclick="switchPartnerTab('approved')">已通过</button>
+        <button class="tab-btn" data-p="rejected" onclick="switchPartnerTab('rejected')">已拒绝</button>
+      </div>
+      <div class="card"><div class="table-wrap"><table><thead><tr><th>ID</th><th>申请方</th><th>类型</th><th>联系</th><th>公司</th><th>时间</th><th>状态</th><th>操作</th></tr></thead><tbody id="partner-table-body"></tbody></table></div></div>
+    </div>
+    <!-- Content -->
+    <div id="page-content" class="page">
+      <div class="section-header">
+        <div><div class="page-title"><span>✎</span> 内容管理</div><div class="page-subtitle">编辑 puff2earn.com 各板块文案（三语）</div></div>
+      </div>
+      <div class="tabs" id="content-tabs">
+        <button class="tab-btn active" data-ct="hero" onclick="switchContentTab('hero')">Hero</button>
+        <button class="tab-btn" data-ct="vision" onclick="switchContentTab('vision')">愿景</button>
+        <button class="tab-btn" data-ct="eco" onclick="switchContentTab('eco')">生态</button>
+        <button class="tab-btn" data-ct="partner-text" onclick="switchContentTab('partner-text')">合伙人</button>
+      </div>
+      <div class="card">
+        <div id="content-editor">
+          <div class="form-group">
+            <label>语言</label>
+            <select id="content-lang" onchange="loadContentEditor()">
+              <option value="zh">简体中文</option>
+              <option value="en">English</option>
+              <option value="ko">한국어</option>
+            </select>
+          </div>
+          <div id="content-fields"></div>
+          <div class="form-actions">
+            <button class="btn btn-outline" onclick="exportContentJson()">📋 导出 JSON</button>
+            <button class="btn btn-primary" onclick="saveContent()">💾 保存内容</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Settings -->
+    <div id="page-settings" class="page">
+      <div class="section-header">
+        <div><div class="page-title"><span>⚙</span> 系统设置</div><div class="page-subtitle">后台系统配置与数据管理</div></div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">🗄️ 数据管理</div>
+          <div class="form-group">
+            <label>初始化示例数据</label>
+            <p style="color:var(--gray);font-size:0.7rem;margin-bottom:0.6rem;font-family:var(--mono)">导入 puff2earn.com 默认产品/NFT/用户数据到后台。</p>
+            <button class="btn btn-primary btn-sm" onclick="initSampleData()">📥 载入示例数据</button>
+          </div>
+          <div class="form-group">
+            <label>清除所有数据</label>
+            <p style="color:var(--gray);font-size:0.7rem;margin-bottom:0.6rem;font-family:var(--mono)">清空后台所有 localStorage 数据。</p>
+            <button class="btn btn-danger btn-sm" onclick="if(confirm('确定清除所有数据？')){clearAllData();}">🗑️ 清除数据</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">🌐 站点信息</div>
+          <div class="form-group"><label>主站域名</label><input type="text" value="https://puff2earn.com" readonly></div>
+          <div class="form-group"><label>当前版本</label><input type="text" value="v1.2 · Pre-Alpha" readonly></div>
+          <div class="form-group"><label>数据存储</label><input type="text" value="localStorage (前端模拟)" readonly></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Product Modal -->
+<div class="modal-overlay" id="product-modal">
+  <div class="modal">
+    <div class="modal-header"><h2 id="prod-modal-title">添加产品</h2><button class="close" onclick="closeModal('product-modal')">✕</button></div>
+    <input type="hidden" id="prod-edit-id">
+    <div class="form-row">
+      <div class="form-group"><label>名称</label><input type="text" id="prod-name" placeholder="输入产品名称"></div>
+      <div class="form-group"><label>品牌</label><input type="text" id="prod-brand" placeholder="如 ELFBAR"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>分类</label><select id="prod-cat"><option value="一次性">一次性</option><option value="换弹">换弹</option><option value="注油">注油</option><option value="烟油">烟油</option></select></div>
+      <div class="form-group"><label>价格 (¥)</label><input type="number" id="prod-price" placeholder="0"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>库存</label><input type="number" id="prod-stock" placeholder="0"></div>
+      <div class="form-group"><label>PUFF 奖励</label><input type="number" id="prod-puff" placeholder="0"></div>
+    </div>
+    <div class="form-group"><label>描述</label><textarea id="prod-desc" placeholder="产品描述"></textarea></div>
+    <div class="form-group"><label>SKU</label><input type="text" id="prod-sku" placeholder="如 PUFF-X1"></div>
+    <div class="form-actions">
+      <button class="btn btn-outline" onclick="closeModal('product-modal')">取消</button>
+      <button class="btn btn-primary" onclick="saveProduct()">保存</button>
+    </div>
+  </div>
+</div>
+<!-- NFT Modal -->
+<div class="modal-overlay" id="nft-modal">
+  <div class="modal">
+    <div class="modal-header"><h2 id="nft-modal-title">添加 NFT</h2><button class="close" onclick="closeModal('nft-modal')">✕</button></div>
+    <input type="hidden" id="nft-edit-id">
+    <div class="form-row">
+      <div class="form-group"><label>名称</label><input type="text" id="nft-name" placeholder="NFT 名称"></div>
+      <div class="form-group"><label>图标</label><input type="text" id="nft-icon" placeholder="☁️"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>稀有度</label><select id="nft-rarity"><option value="common">Common</option><option value="rare">Rare</option><option value="epic">Epic</option></select></div>
+      <div class="form-group"><label>估值 (PUFF)</label><input type="number" id="nft-value" placeholder="80"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>铸造费 (PUFF)</label><input type="number" id="nft-mint-cost" placeholder="50"></div>
+      <div class="form-group"><label>最大供应</label><input type="number" id="nft-supply" placeholder="100"></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-outline" onclick="closeModal('nft-modal')">取消</button>
+      <button class="btn btn-primary" onclick="saveNft()">保存</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const DB_KEY = 'puff-admin-data';
+function getDB(){try{const d=localStorage.getItem(DB_KEY);return d?JSON.parse(d):defaultDB()}catch{return defaultDB()}}
+function saveDB(db){localStorage.setItem(DB_KEY,JSON.stringify(db))}
+function defaultDB(){return{products:[],orders:[],users:[],nfts:[],partners:[],nextId:{product:1,order:1001,user:1,nft:101,partner:1}}}
+
+function initSampleData(){
+  const db=getDB();const now=new Date().toISOString();
+  db.products=[
+    {id:1,name:'ELFBAR BC5000',brand:'ELFBAR',cat:'一次性',price:158,stock:200,puffReward:30,sku:'ELFBAR-BC5',desc:'5000口一次性电子烟'},
+    {id:2,name:'SMOK Novo 5',brand:'SMOK',cat:'一次性',price:129,stock:180,puffReward:25,sku:'SMOK-N5',desc:'SMOK 最新一次性产品'},
+    {id:3,name:'VAPORESSO XROS 3',brand:'VAPORESSO',cat:'一次性',price:139,stock:150,puffReward:28,sku:'VPR-X3',desc:'高性能一次性'},
+    {id:4,name:'UWELL Caliburn A3',brand:'UWELL',cat:'一次性',price:89,stock:250,puffReward:18,sku:'UWELL-A3',desc:'经典小烟'},
+    {id:5,name:'GeekVape Wenax Q',brand:'GeekVape',cat:'换弹',price:79,stock:120,puffReward:16,sku:'GK-WQ',desc:'入门级换弹'},
+    {id:6,name:'Voopoo Argus G',brand:'VOOPOO',cat:'换弹',price:99,stock:100,puffReward:20,sku:'VP-AG',desc:'Argus 系列'},
+    {id:7,name:'Innokin Jem',brand:'Innokin',cat:'换弹',price:89,stock:90,puffReward:18,sku:'IN-JEM',desc:'轻巧换弹'},
+    {id:8,name:'Lost Vape Ursa Nano',brand:'Lost Vape',cat:'换弹',price:129,stock:70,puffReward:26,sku:'LV-UN',desc:'Ursa 迷你'},
+    {id:9,name:'Vaporesso Gen PT60',brand:'VAPORESSO',cat:'注油',price:199,stock:60,puffReward:40,sku:'VPR-GPT60',desc:'注油套装'},
+    {id:10,name:'Smok Nord 5',brand:'SMOK',cat:'注油',price:149,stock:80,puffReward:30,sku:'SMOK-N5O',desc:'Nord 5'},
+    {id:11,name:'Freemax Maxus',brand:'Freemax',cat:'注油',price:179,stock:50,puffReward:36,sku:'FM-MAX',desc:'Maxus 旗舰'},
+    {id:12,name:'Voopoo Drag X',brand:'VOOPOO',cat:'注油',price:169,stock:65,puffReward:34,sku:'VP-DX',desc:'Drag X'},
+    {id:13,name:'Naked 100',brand:'Naked 100',cat:'烟油',price:89,stock:300,puffReward:15,sku:'NK-100',desc:'30ml'},
+    {id:14,name:'Dinner Lady',brand:'Dinner Lady',cat:'烟油',price:79,stock:280,puffReward:13,sku:'DL-LADY',desc:'经典烟油'},
+    {id:15,name:'Puff Chain X1',brand:'PUFF-CHAIN',cat:'烟油',price:69,stock:500,puffReward:20,sku:'PCH-X1',desc:'联名烟油'},
+    {id:16,name:'Juice Head',brand:'Juice Head',cat:'烟油',price:85,stock:200,puffReward:14,sku:'JH-HEAD',desc:'冰爽烟油'}
+  ];
+  db.nfts=[
+    {id:101,name:'Genesis Cloud',icon:'☁️',rarity:'rare',value:80,mintCost:50,maxSupply:500,minted:2,enabled:true},
+    {id:102,name:'Cyber Wave',icon:'🌊',rarity:'common',value:30,mintCost:50,maxSupply:1000,minted:5,enabled:true},
+    {id:103,name:'Neon Drop',icon:'💧',rarity:'epic',value:200,mintCost:50,maxSupply:100,minted:0,enabled:true},
+    {id:104,name:'PUFF-X1',icon:'🔷',rarity:'common',value:30,mintCost:50,maxSupply:1000,minted:3,enabled:true},
+    {id:105,name:'Vape Aura',icon:'✨',rarity:'rare',value:80,mintCost:50,maxSupply:500,minted:1,enabled:true},
+    {id:106,name:'Block Vapor',icon:'🧊',rarity:'common',value:30,mintCost:50,maxSupply:1000,minted:0,enabled:true},
+    {id:107,name:'Vapor Ghost',icon:'👻',rarity:'epic',value:200,mintCost:50,maxSupply:100,minted:0,enabled:true},
+    {id:108,name:'Pixel Puff',icon:'🎮',rarity:'rare',value:80,mintCost:50,maxSupply:500,minted:0,enabled:true},
+    {id:109,name:'Chain Link',icon:'🔗',rarity:'common',value:30,mintCost:50,maxSupply:1000,minted:0,enabled:true}
+  ];
+  db.users=[
+    {id:1,username:'vapor_king',email:'vapor@example.com',wallet:'0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b',puffs:1284,nftCount:1,orderCount:3,registered:'2026-05-01T08:30:00Z'},
+    {id:2,username:'sky_puffer',email:'sky@example.com',wallet:'0x2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c',puffs:520,nftCount:0,orderCount:1,registered:'2026-05-15T10:00:00Z'},
+    {id:3,username:'neon_dream',email:'neon@example.com',wallet:'0x3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d',puffs:2100,nftCount:3,orderCount:5,registered:'2026-04-20T14:20:00Z'}
+  ];
+  db.orders=[];
+  for(let i=0;i<12;i++){
+    const p=db.products[Math.floor(Math.random()*db.products.length)];
+    const qty=1+Math.floor(Math.random()*3);
+    const user=db.users[Math.floor(Math.random()*db.users.length)];
+    const ss=['pending','shipped','completed','pending','completed','shipped','completed'];
+    const d=new Date();d.setDate(d.getDate()-Math.floor(Math.random()*30));
+    db.orders.push({id:1001+i,userId:user.id,userName:user.username,productName:p.name,productId:p.id,qty:qty,amount:p.price*qty,puffReward:p.puffReward*qty,status:ss[Math.floor(Math.random()*ss.length)],createdAt:d.toISOString()});
+  }
+  db.partners=[
+    {id:1,name:'雾化新势力',type:'区域合伙人',contact:'张经理 13800138000',company:'雾化新势力科技',status:'pending',createdAt:'2026-06-10T09:00:00Z'},
+    {id:2,name:'Cloud Vape',type:'品牌合作方',contact:'contact@cloudvape.com',company:'Cloud Vape Inc.',status:'approved',createdAt:'2026-05-28T11:30:00Z'},
+    {id:3,name:'VaporNode',type:'节点合伙人',contact:'node@vapornode.io',company:'VaporNode DAO',status:'pending',createdAt:'2026-06-20T16:00:00Z'},
+    {id:4,name:'电子烟之家',type:'区域合伙人',contact:'李生 13912345678',company:'电子烟之家',status:'rejected',createdAt:'2026-05-15T08:00:00Z'}
+  ];
+  db.nextId={product:17,order:1013,user:4,nft:110,partner:5};
+  saveDB(db);renderAll();showAlert('✅ 示例数据已加载！','success');
+}
+function clearAllData(){localStorage.removeItem(DB_KEY);renderAll();showAlert('🗑️ 所有数据已清除','info')}
+function showAlert(m,t){const a=document.getElementById('alert-area');a.innerHTML='<div class=\"alert '+t+'\">'+m+'</div>';setTimeout(()=>a.innerHTML='',4000)}
+
+// Navigation
+document.querySelectorAll('.sidebar-nav a[data-page]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();document.querySelectorAll('.sidebar-nav a').forEach(x=>x.classList.remove('active'));a.classList.add('active');document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('page-'+a.dataset.page).classList.add('active');renderAll()})})
+
+// Dashboard
+function renderDashboard(){
+  const db=getDB();
+  document.getElementById('ds-users').textContent=db.users.length;
+  document.getElementById('ds-orders').textContent=db.orders.length;
+  document.getElementById('ds-nfts').textContent=db.nfts.reduce((s,n)=>s+n.minted,0);
+  document.getElementById('ds-puffs').textContent=db.users.reduce((s,u)=>s+u.puffs,0).toLocaleString();
+  document.getElementById('ds-partners').textContent=db.partners.length;
+  document.getElementById('ds-partners').parentElement.querySelector('.change').innerHTML='待审核 '+db.partners.filter(p=>p.status==='pending').length;
+  document.getElementById('ds-revenue').textContent='¥'+db.orders.reduce((s,o)=>s+o.amount,0).toLocaleString();
+  const recent=[...db.orders].sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt)).slice(0,5);
+  const rt=document.getElementById('dash-recent-orders');
+  if(!recent.length)rt.innerHTML='<tr><td colspan=\"4\" style=\"text-align:center;color:var(--gray)\">暂无订单数据</td></tr>';
+  else rt.innerHTML=recent.map(o=>'<tr><td>#'+o.id+'</td><td>'+o.userName+'</td><td>¥'+o.amount+'</td><td><span class=\"badge '+(o.status==='completed'?'green':o.status==='shipped'?'cyan':o.status==='pending'?'orange':'red')+'\">'+(o.status==='completed'?'已完成':o.status==='shipped'?'已发货':o.status==='pending'?'待处理':'已取消')+'</span></td></tr>').join('');
+  const pc={};db.orders.forEach(o=>{pc[o.productName]=(pc[o.productName]||0)+o.qty});
+  const sorted=Object.entries(pc).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const pt=document.getElementById('dash-top-products');
+  if(!sorted.length)pt.innerHTML='<tr><td colspan=\"3\" style=\"text-align:center;color:var(--gray)\">暂无销量数据</td></tr>';
+  else pt.innerHTML=sorted.map(([n,c])=>{const p=db.products.find(x=>x.name===n);return '<tr><td>'+n+'</td><td>'+(p?p.cat:'-')+'</td><td>'+c+'</td></tr>'}).join('');
+}
+
+// Products
+let prodFilterCat='all';
+function switchProdCat(c){prodFilterCat=c;document.querySelectorAll('#prod-cat-tabs .tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.cat===c));renderProducts()}
+function renderProducts(){
+  const db=getDB();const q=(document.getElementById('prod-search').value||'').toLowerCase();
+  let f=db.products.filter(p=>(prodFilterCat==='all'||p.cat===prodFilterCat)&&(!q||p.name.toLowerCase().includes(q)||p.sku.toLowerCase().includes(q)));
+  const tb=document.getElementById('prod-table-body');
+  if(!f.length){tb.innerHTML='<tr><td colspan=\"9\" style=\"text-align:center;color:var(--gray)\">暂无产品</td></tr>';return}
+  tb.innerHTML=f.map(p=>'<tr><td>'+p.id+'</td><td style=\"color:var(--cyan)\">'+p.name+'</td><td>'+p.cat+'</td><td>'+p.brand+'</td><td>¥'+p.price+'</td><td>'+p.stock+'</td><td>+'+p.puffReward+'</td><td><span class=\"badge '+(p.stock>10?'green':p.stock>0?'orange':'red')+'\">'+(p.stock>10?'在售':p.stock>0?'低库存':'缺货')+'</span></td><td><button class=\"btn btn-outline btn-sm\" onclick=\"editProduct('+p.id+')\">✎</button><button class=\"btn btn-danger btn-sm\" onclick=\"deleteProduct('+p.id+')\">✕</button></td></tr>').join('')
+}
+function openProductModal(d){document.getElementById('product-modal').classList.add('show');document.getElementById('prod-modal-title').textContent=d?'编辑产品':'添加产品';document.getElementById('prod-edit-id').value=d?d.id:'';document.getElementById('prod-name').value=d?d.name:'';document.getElementById('prod-brand').value=d?d.brand:'';document.getElementById('prod-cat').value=d?d.cat:'一次性';document.getElementById('prod-price').value=d?d.price:'';document.getElementById('prod-stock').value=d?d.stock:'';document.getElementById('prod-puff').value=d?d.puffReward:'';document.getElementById('prod-desc').value=d?d.desc:'';document.getElementById('prod-sku').value=d?d.sku:''}
+function editProduct(id){const db=getDB();const p=db.products.find(x=>x.id===id);if(p)openProductModal(p)}
+function saveProduct(){const db=getDB();const eid=document.getElementById('prod-edit-id').value;const d={name:document.getElementById('prod-name').value.trim(),brand:document.getElementById('prod-brand').value.trim(),cat:document.getElementById('prod-cat').value,price:parseInt(document.getElementById('prod-price').value)||0,stock:parseInt(document.getElementById('prod-stock').value)||0,puffReward:parseInt(document.getElementById('prod-puff').value)||0,desc:document.getElementById('prod-desc').value.trim(),sku:document.getElementById('prod-sku').value.trim()};if(!d.name){showAlert('请输入产品名称','error');return}if(eid){const idx=db.products.findIndex(p=>p.id==parseInt(eid));if(idx>-1)db.products[idx]={...db.products[idx],...d}}else{d.id=db.nextId.product++;db.products.push(d)}saveDB(db);closeModal('product-modal');renderProducts();showAlert('✅ 已保存','success')}
+function deleteProduct(id){if(!confirm('确定删除？'))return;const db=getDB();db.products=db.products.filter(p=>p.id!==id);saveDB(db);renderProducts();showAlert('🗑️ 已删除','info')}
+</script>
+</body>
+</html>

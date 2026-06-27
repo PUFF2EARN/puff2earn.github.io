@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>PUFF-CHAIN 路 鍟嗗簵</title>
+<meta name="description" content="閫夎喘 PUFF-CHAIN 骞冲彴鐢靛瓙鐑熶骇鍝侊紝鏀寔璐墿杞︾粨绠楋紝涓嬪崟鍗冲緱 PUFF 浠ｅ竵濂栧姳銆? />
+<link rel="stylesheet" href="style.css" />
+<style>
+.cart-wrap{position:fixed;top:80px;right:1rem;z-index:100}
+.cart-btn{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:0.6rem 1rem;cursor:pointer;font-family:var(--mono);font-size:0.85rem;color:var(--cyan);display:flex;align-items:center;gap:8px;transition:border-color .25s}
+.cart-btn:hover{border-color:var(--cyan)}
+.cart-badge{background:var(--pink);color:var(--white);border-radius:50%;width:20px;height:20px;font-size:0.6rem;display:flex;align-items:center;justify-content:center}
+.cart-panel{display:none;position:fixed;top:130px;right:1rem;width:380px;max-height:70vh;background:var(--surface);border:1px solid var(--border);border-radius:4px;z-index:101;overflow-y:auto;padding:1rem}
+.cart-panel.show{display:block;animation:fd .2s}
+@keyframes fd{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.cart-panel h3{font-family:var(--mono);font-weight:400;font-size:0.9rem;letter-spacing:1px;margin-bottom:0.8rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border)}
+.cart-item{display:flex;align-items:center;gap:10px;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.03)}
+.cart-item:last-child{border:none}
+.cart-item .ci-name{flex:1;font-family:var(--mono);font-size:0.8rem;color:var(--white)}
+.cart-item .ci-qty{display:flex;align-items:center;gap:6px}
+.cart-item .ci-qty button{background:var(--surface2);border:1px solid var(--border);color:var(--cyan);width:26px;height:26px;border-radius:2px;cursor:pointer;font-size:0.9rem}
+.cart-item .ci-qty span{font-family:var(--mono);font-size:0.85rem;color:var(--white);min-width:20px;text-align:center}
+.cart-item .ci-price{font-family:var(--mono);font-size:0.8rem;color:var(--cyan);min-width:60px;text-align:right}
+.cart-item .ci-remove{background:none;border:none;color:var(--gray);cursor:pointer;font-size:0.9rem;padding:4px}
+.cart-item .ci-remove:hover{color:var(--red)}
+.cart-total{display:flex;justify-content:space-between;padding:0.8rem 0 0.5rem;font-family:var(--mono);font-size:0.95rem;border-top:1px solid var(--border);margin-top:0.5rem}
+.cart-total span:last-child{color:var(--cyan)}
+.cart-actions{display:flex;gap:8px;margin-top:0.5rem}
+.cart-actions .btn{flex:1;text-align:center}
+.bb.buying{opacity:0.5;pointer-events:none}
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:105;align-items:center;justify-content:center}
+.ov.show{display:flex}
+.checkout-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;width:90%;max-width:480px;padding:1.5rem;animation:fd .2s}
+.checkout-card h2{font-family:var(--mono);font-weight:300;font-size:1.1rem;letter-spacing:2px;margin-bottom:1rem}
+.checkout-card h2 span{color:var(--cyan)}
+.ck-summary{font-family:var(--mono);font-size:0.78rem;margin-bottom:1rem;padding:0.8rem;background:var(--surface2);border:1px solid var(--border);border-radius:3px}
+.ck-summary .ck-row{display:flex;justify-content:space-between;padding:0.3rem 0}
+.ck-summary .ck-row.total{color:var(--cyan);font-size:0.9rem;border-top:1px solid var(--border);padding-top:0.5rem;margin-top:0.3rem}
+.ck-form .fg{margin-bottom:0.8rem}
+.ck-form .fg label{display:block;font-family:var(--mono);font-size:0.7rem;color:var(--gray);margin-bottom:0.2rem}
+.ck-form .fg input{width:100%;padding:0.6rem 0.8rem;background:var(--surface2);border:1px solid var(--border);border-radius:3px;color:var(--white);font-family:var(--mono);font-size:0.8rem;outline:none}
+.ck-form .fg input:focus{border-color:var(--cyan)}
+.ck-actions{display:flex;gap:8px;margin-top:1rem;padding-top:0.8rem;border-top:1px solid var(--border)}
+.ck-actions .btn{flex:1;text-align:center}
+.ck-success{text-align:center;padding:2rem 1rem}
+.ck-success .icon{font-size:3rem;margin-bottom:0.8rem}
+.ck-success h3{font-family:var(--mono);font-weight:300;font-size:1.2rem;margin-bottom:0.5rem}
+.ck-success h3 span{color:var(--cyan)}
+.ck-success p{font-family:var(--mono);font-size:0.78rem;color:var(--gray);margin-bottom:0.5rem}
+@media(max-width:768px){
+  .cart-panel{width:calc(100vw - 2rem);right:1rem;top:120px}
+  .cart-wrap{right:0.5rem}
+}
+.notif{position:fixed;top:90px;right:1rem;background:var(--surface);border:1px solid var(--green);border-radius:4px;padding:0.6rem 1rem;font-family:var(--mono);font-size:0.75rem;color:var(--green);z-index:200;animation:fd .2s;display:none}
+.notif.show{display:block}
+.sg .pdc .pv svg{width:60px;height:60px;display:block}
+</style>
+</head>
+<body>
+
+<div id="notif" class="notif"></div>
+
+<script id="i18n-store" type="application/json">{"zh":{"st_all":"全部","st_cat1":"一次性","st_cat2":"换弹","st_cat3":"注油","st_cat4":"烟油","st_b":"购买","st_brands":"品牌列表","st_cart":"购物车","st_empty":"购物车为空","st_total":"合计","st_checkout":"去结算","st_close":"关闭","st_pay":"提交订单","st_name":"收货人","st_phone":"手机号","st_addr":"收货地址","st_confirm":"确认下单","st_ok":"下单成功","st_puff":"获得 PUFF 奖励","st_pts":"积分","st_disc":"折扣","st_alert_cart":"已添加到购物车","st_alert_order":"订单已提交","st_alert_login":"请先登录","st_order_title":"我的订单","st_order_id":"订单号","st_order_date":"日期","st_order_status":"状态","st_order_pending":"待处理","st_order_shipped":"已发货","st_order_delivered":"已送达","st_order_cancelled":"已取消","st_loading":"加载中...","st_nav_home":"首页","st_nav_shop":"商店","st_nav_wallet":"钱包","st_nav_register":"注册/登录","st_add_cart":"加入购物车","st_remove":"移除","st_quantity":"数量","st_subtotal":"小计","st_promo":"优惠码","st_apply":"使用","st_promo_placeholder":"输入优惠码","st_cart_panel":"购物车面板","st_nav_user":"用户","st_nav_logout":"退出","st_nav_admin":"管理"},"en":{"st_all":"All","st_cat1":"Disposable","st_cat2":"Pod","st_cat3":"Refillable","st_cat4":"E-Liquid","st_b":"Buy","st_brands":"Brands","st_cart":"Cart","st_empty":"Cart is empty","st_total":"Total","st_checkout":"Checkout","st_close":"Close","st_pay":"Submit Order","st_name":"Receiver","st_phone":"Phone","st_addr":"Address","st_confirm":"Confirm","st_ok":"Order Placed","st_puff":"PUFF Rewards Earned","st_pts":"Points","st_disc":"Discount","st_alert_cart":"Added to cart","st_alert_order":"Order submitted","st_alert_login":"Please login first","st_order_title":"My Orders","st_order_id":"Order #","st_order_date":"Date","st_order_status":"Status","st_order_pending":"Pending","st_order_shipped":"Shipped","st_order_delivered":"Delivered","st_order_cancelled":"Cancelled","st_loading":"Loading...","st_nav_home":"Home","st_nav_shop":"Shop","st_nav_wallet":"Wallet","st_nav_register":"Sign Up","st_add_cart":"Add to Cart","st_remove":"Remove","st_quantity":"Qty","st_subtotal":"Subtotal","st_promo":"Promo Code","st_apply":"Apply","st_promo_placeholder":"Enter code","st_cart_panel":"Cart Panel","st_nav_user":"User","st_nav_logout":"Logout","st_nav_admin":"Admin"},"ko":{"st_all":"전체","st_cat1":"일회용","st_cat2":"팟","st_cat3":"리필","st_cat4":"액상","st_b":"구매","st_brands":"브랜드","st_cart":"장바구니","st_empty":"장바구니 비었음","st_total":"합계","st_checkout":"결제","st_close":"닫기","st_pay":"주문 제출","st_name":"수령인","st_phone":"전화","st_addr":"주소","st_confirm":"확인","st_ok":"주문 완료","st_puff":"PUFF 보상 획득","st_pts":"포인트","st_disc":"할인","st_alert_cart":"장바구니 추가됨","st_alert_order":"주문 제출됨","st_alert_login":"로그인 필요","st_order_title":"내 주문","st_order_id":"주문번호","st_order_date":"날짜","st_order_status":"상태","st_order_pending":"대기","st_order_shipped":"발송","st_order_delivered":"완료","st_order_cancelled":"취소","st_loading":"로딩중...","st_nav_home":"홈","st_nav_shop":"쇼핑","st_nav_wallet":"지갑","st_nav_register":"가입","st_add_cart":"담기","st_remove":"제거","st_quantity":"수량","st_subtotal":"소계","st_promo":"할인코드","st_apply":"적용","st_promo_placeholder":"코드 입력","st_cart_panel":"카트","st_nav_user":"사용자","st_nav_logout":"로그아웃","st_nav_admin":"관리"}</script>
+
+<nav>
+  <div class="logo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+    <span>//</span> PUFF<span>-CHAIN</span>
+  </div>
+  <div class="nr" id="nr">
+    <ul>
+      <li><a href="index.html">棣栭〉</a></li>
+      <li><a href="index.html#roadmap">璺嚎</a></li>
+      <li><a href="register.html">娉ㄥ唽</a></li>
+      <li><a href="wallet.html">閽卞寘</a></li>
+      <li><a href="scan.html">鎵爜</a></li>
+    </ul>
+    <div class="ls">
+      <button onclick="sw('zh')" id="bzh">涓?/button>
+      <button onclick="sw('en')" id="ben">EN</button>
+      <button onclick="sw('ko')" id="bko">頃?/button>
+      <span id="nav-user-info" style="display:none;gap:6px;align-items:center;margin-left:8px;font-size:0.65rem;font-family:var(--mono)">
+        <span id="nav-user-name" style="color:var(--cyan)"></span>
+        <a href="wallet.html" style="color:var(--gray)">閽卞寘</a>
+        <a href="admin/" style="color:var(--gray)">绠＄悊</a>
+        <button onclick="doLogout()" style="background:transparent;border:1px solid var(--border);color:var(--pink);padding:2px 8px;cursor:pointer;font-family:var(--mono);font-size:0.55rem;letter-spacing:1px;border-radius:2px">閫€鍑?/button>
+      </span>
+    </div>
+  </div>
+  <button class="hb" id="hb2"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="cart-wrap">
+  <button class="cart-btn" onclick="toggleCart()">馃洅 <span id="cart-count">0</span></button>
+</div>
+<div class="cart-panel" id="cart-panel">
+  <h3 id="cart-title">馃洅 璐墿杞?/h3>
+  <div id="cart-items"></div>
+  <div class="cart-total"><span data-i="st_total">鍚堣</span><span id="cart-total-price">楼0</span></div>
+  <div class="cart-actions">
+    <button class="btn bo" onclick="clearCart()" data-i="st_clear">娓呯┖</button>
+    <button class="btn bp" onclick="openCheckout()" id="btn-checkout" data-i="st_checkout">鍘荤粨绠?/button>
+  </div>
+</div>
+
+<div class="ov" id="checkout-overlay">
+  <div class="checkout-card">
+    <div id="checkout-body">
+      <h2><span>鈼?/span> <span data-i="st_checkout">纭璁㈠崟</span></h2>
+      <div class="ck-summary" id="ck-summary"></div>
+      <div class="ck-form">
+        <div class="fg"><label data-i="st_name">鏀惰揣浜?/label><input type="text" id="ck-name" placeholder="寮犱笁"></div>
+        <div class="fg"><label data-i="st_phone">鎵嬫満鍙?/label><input type="text" id="ck-phone" placeholder="13800138000"></div>
+        <div class="fg"><label data-i="st_address">鏀惰揣鍦板潃</label><input type="text" id="ck-addr" placeholder="XX鐪乆X甯俋X鍖篨X璺疿X鍙?></div>
+      </div>
+      <div class="ck-actions">
+        <button class="btn bo" onclick="closeCheckout()" data-i="st_cancel">鍙栨秷</button>
+        <button class="btn bp" onclick="placeOrder()" id="btn-place-order" data-i="st_confirm">纭涓嬪崟</button>
+      </div>
+    </div>
+    <div id="checkout-success" style="display:none">
+      <div class="ck-success">
+        <div class="icon">鉁?/div>
+        <h3><span data-i="st_order_placed">涓嬪崟鎴愬姛锛?/span></h3>
+        <p id="ck-order-number"></p>
+        <p id="ck-puff-earned"></p>
+        <button class="btn bp" onclick="closeCheckout();renderCart()" style="margin-top:1rem">馃憤 OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="store-page" style="padding-top:100px">
+  <div class="slb">// STORE</div>
+  <h2 class="st"><span data-i="st_t">浜у搧</span> <span style="color:var(--cyan)">鍟嗗簵</span></h2>
+
+  <div class="scat">
+    <button class="scat-btn ac" data-i="st_all" data-cat="all">鍏ㄩ儴</button>
+    <button class="scat-btn" data-i="st_cat1" data-cat="disposable">涓€娆℃€?/button>
+    <button class="scat-btn" data-i="st_cat2" data-cat="pod">鎹㈠脊</button>
+    <button class="scat-btn" data-i="st_cat3" data-cat="refillable">娉ㄦ补</button>
+    <button class="scat-btn" data-i="st_cat4" data-cat="oil">鐑熸补</button>
+  </div>
+
+  <h4 class="brand-title" data-i="st_brands">鍝佺墝鍒楄〃</h4>
+  <div class="brand-grid" id="brand-grid"></div>
+
+  <div class="sg" id="store-grid"></div>
+</section>
+
+<footer>
+  <div><span style="font-family:var(--mono);color:var(--cyan);letter-spacing:2px">PUFF-CHAIN</span><span style="color:var(--gray);margin-left:8px"> &middot; </span>Store</div>
+  <div class="le"><a href="index.html">棣栭〉</a> &middot; <a href="wallet.html">閽卞寘</a> &middot; <a href="register.html">娉ㄥ唽</a><br /><span>&copy; 2026 PUFF-CHAIN</span></div>
+</footer>
+
+<script>
+var lang = localStorage.getItem('puff-lang') || 'zh';
+var i18n = JSON.parse(document.getElementById('i18n-store').textContent);
+
+var PRODUCTS = [
+  {id:1,cat:"disposable",name:"ELFBAR BC5000",brand:"ELFBAR",price:129,puff:30,img:'elfbar'},
+  {id:2,cat:"disposable",name:"ELFBAR CR600",brand:"ELFBAR",price:99,puff:20,img:'elfbar'},
+  {id:3,cat:"disposable",name:"ELFBAR ELFX",brand:"ELFBAR",price:60,puff:12,img:'elfbar'},
+  {id:4,cat:"disposable",name:"LOST MARY MO20000",brand:"LOST MARY",price:199,puff:40,img:'lostmary'},
+  {id:5,cat:"disposable",name:"LOST MARY OS5000",brand:"LOST MARY",price:139,puff:28,img:'lostmary'},
+  {id:6,cat:"disposable",name:"LOST MARY MT15000",brand:"LOST MARY",price:149,puff:30,img:'lostmary'},
+  {id:7,cat:"disposable",name:"HQD CIRI",brand:"HQD",price:120,puff:24,img:'hqd'},
+  {id:8,cat:"disposable",name:"HQD STIK",brand:"HQD",price:89,puff:18,img:'hqd'},
+  {id:9,cat:"disposable",name:"FUMOT CHILLAX",brand:"FUMOT",price:109,puff:22,img:'fumot'},
+  {id:10,cat:"disposable",name:"FUMOT GEM",brand:"FUMOT",price:219,puff:44,img:'fumot'},
+  {id:11,cat:"disposable",name:"WAKA SOFTOPEN",brand:"WAKA",price:139,puff:28,img:'waka'},
+  {id:12,cat:"disposable",name:"WAKA SMASH",brand:"WAKA",price:179,puff:36,img:'waka'},
+  {id:13,cat:"refillable",name:"OXVA XLIM PRO 2",brand:"OXVA",price:100,puff:20,img:'oxva'},
+  {id:14,cat:"refillable",name:"OXVA NEXLM",brand:"OXVA",price:120,puff:24,img:'oxva'},
+  {id:15,cat:"refillable",name:"SMOK NORD 5",brand:"SMOK",price:199,puff:40,img:'smok'},
+  {id:16,cat:"refillable",name:"SMOK RPM 4",brand:"SMOK",price:169,puff:34,img:'smok'}
+];
+var CAT_ICONS = {disposable:'鈿?,pod:'馃挩',refillable:'馃攧',oil:'馃挧'};
+
+// SVG icons for each product
+var SVG_ICONS = {
+  elfbar:'<svg viewBox="0 0 60 60" fill="none"><rect x="12" y="10" width="36" height="40" rx="3" stroke="#33eaff" stroke-width="1.5"/><circle cx="30" cy="20" r="4" fill="#33eaff" opacity="0.3"/><circle cx="30" cy="20" r="2" fill="#33eaff"/><circle cx="30" cy="40" r="5" stroke="#6b7294" stroke-width="1" opacity="0.5"/><line x1="30" y1="24" x2="30" y2="35" stroke="#33eaff" stroke-width="0.8" opacity="0.4"/></svg>',
+  lostmary:'<svg viewBox="0 0 60 60" fill="none"><rect x="14" y="8" width="32" height="44" rx="4" stroke="#33eaff" stroke-width="1.2"/><rect x="18" y="12" width="24" height="16" rx="2" stroke="#6b7294" stroke-width="0.8" opacity="0.5"/><circle cx="30" cy="38" r="4" stroke="#33eaff" stroke-width="1.2"/><path d="M20 52h20" stroke="#33eaff" stroke-width="1" opacity="0.3"/></svg>',
+  hqd:'<svg viewBox="0 0 60 60" fill="none"><rect x="15" y="6" width="30" height="48" rx="5" stroke="#33eaff" stroke-width="1.2"/><line x1="24" y1="14" x2="36" y2="14" stroke="#33eaff" stroke-width="1.5"/><line x1="24" y1="18" x2="32" y2="18" stroke="#33eaff" stroke-width="1" opacity="0.5"/><circle cx="30" cy="40" r="6" stroke="#6b7294" stroke-width="0.8"/></svg>',
+  fumot:'<svg viewBox="0 0 60 60" fill="none"><rect x="10" y="12" width="40" height="36" rx="6" stroke="#33eaff" stroke-width="1.5"/><path d="M20 20v20M30 20v20M40 20v20" stroke="#33eaff" stroke-width="0.6" opacity="0.3"/><circle cx="30" cy="30" r="3" fill="#33eaff" opacity="0.4"/></svg>',
+  waka:'<svg viewBox="0 0 60 60" fill="none"><rect x="16" y="8" width="28" height="44" rx="6" stroke="#33eaff" stroke-width="1.2"/><path d="M22 14h16v10H22z" stroke="#6b7294" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="30" cy="35" r="4" stroke="#33eaff" stroke-width="0.8"/><path d="M18 52h24" stroke="#33eaff" stroke-width="1" opacity="0.3"/></svg>',
+  oxva:'<svg viewBox="0 0 60 60" fill="none"><rect x="13" y="10" width="34" height="40" rx="3" stroke="#33eaff" stroke-width="1.2"/><rect x="25" y="16" width="10" height="16" rx="1" stroke="#6b7294" stroke-width="0.8" opacity="0.5"/><path d="M20 38h20" stroke="#33eaff" stroke-width="1.5"/><circle cx="30" cy="44" r="3" fill="none" stroke="#33eaff" stroke-width="0.8" opacity="0.6"/></svg>',
+  smok:'<svg viewBox="0 0 60 60" fill="none"><rect x="11" y="14" width="38" height="32" rx="4" stroke="#33eaff" stroke-width="1.2"/><rect x="17" y="18" width="26" height="24" rx="2" stroke="#6b7294" stroke-width="0.6" opacity="0.4"/><circle cx="30" cy="30" r="2" fill="#33eaff"/><line x1="30" y1="32" x2="30" y2="46" stroke="#33eaff" stroke-width="0.8" opacity="0.3"/></svg>'
+};
+var BRAND_LIST = [...new Set(PRODUCTS.map(p=>p.brand))];
+
+// ====== Cart functions ======
+function getCart(){try{return JSON.parse(localStorage.getItem('puff-cart'))||[]}catch{return[]}}
+function saveCart(c){localStorage.setItem('puff-cart',JSON.stringify(c))}
+function getCartCount(){return getCart().reduce((s,i)=>s+i.qty,0)}
+function renderCart(){
+  var c=getCart(),el=document.getElementById('cart-items'),t=0,html='';
+  document.getElementById('cart-count').textContent=getCartCount();
+  if(!c.length){el.innerHTML='<p style="text-align:center;color:var(--gray);padding:1rem;font-family:var(--mono);font-size:0.75rem" data-i="st_empty">璐墿杞︿负绌?/p>';document.getElementById('cart-total-price').textContent='楼0';return}
+  c.forEach(function(x){
+    var p=PRODUCTS.find(pr=>pr.id===x.id);if(!p)return;
+    t+=p.price*x.qty;
+    html+='<div class="cart-item"><span class="ci-name">'+p.name+'</span><div class="ci-qty"><button onclick="updateQty('+x.id+',-1)">-</button><span>'+x.qty+'</span><button onclick="updateQty('+x.id+',1)">+</button></div><span class="ci-price">楼'+(p.price*x.qty)+'</span><button class="ci-remove" onclick="removeFromCart('+x.id+')">脳</button></div>';
+  });
+  el.innerHTML=html;
+  document.getElementById('cart-total-price').textContent='楼'+t;
+}
+function updateQty(id,delta){var c=getCart(),i=c.findIndex(x=>x.id===id);if(i<0)return;c[i].qty+=delta;if(c[i].qty<1)c.splice(i,1);saveCart(c);renderCart()}
+function removeFromCart(id){var c=getCart().filter(x=>x.id!==id);saveCart(c);renderCart()}
+function clearCart(){localStorage.removeItem('puff-cart');renderCart()}
+function toggleCart(){document.getElementById('cart-panel').classList.toggle('show')}
+
+// ====== Store render ======
+function renderStore(cat){
+  var grid=document.getElementById('store-grid'),html='';
+  var prods=cat&&cat!=='all'?PRODUCTS.filter(p=>p.cat===cat):PRODUCTS;
+  prods.forEach(function(p){
+    var svg=SVG_ICONS[p.img]||SVG_ICONS.elfbar;
+    html+='<div class="pdc"><div class="pv">'+svg+'</div><div class="pi"><h4>'+p.name+'</h4><p class="desc" style="color:var(--gray);font-size:0.7rem">'+p.brand+' 路 '+CAT_ICONS[p.cat]+'</p><div class="br"><span class="prc">楼'+p.price+'</span><span style="font-family:var(--mono);font-size:0.6rem;color:var(--pink)">+'+p.puff+' PUFF</span><button class="bb" onclick="addToCart('+p.id+')" data-i="st_b">璐拱</button></div></div></div>';
+  });
+  grid.innerHTML=html;
+  // Re-apply i18n
+  document.querySelectorAll('[data-i]').forEach(function(el){
+    var k=el.getAttribute('data-i');
+    if(i18n[lang]&&i18n[lang][k]){el.textContent=i18n[lang][k]}
+  });
+}
+function filterStore(cat,btn){
+  document.querySelectorAll('.scat-btn').forEach(function(b){b.classList.remove('ac')});
+  if(btn)btn.classList.add('ac');
+  renderStore(cat);
+}
+
+// ====== Cart & checkout ======
+function addToCart(id){var c=getCart();var p=PRODUCTS.find(x=>x.id===id);if(!p)return;var ex=c.find(x=>x.id===id);if(ex){ex.qty++}else{c.push({id:id,qty:1})}saveCart(c);showNotif('+ '+p.name+' x1');renderCart()}
+
+function showNotif(msg){var el=document.getElementById('notif');el.textContent=msg;el.classList.add('show');setTimeout(function(){el.classList.remove('show')},1500)}
+
+function openCheckout(){
+  var c=getCart();if(!c.length)return;
+  // Check login
+  var session=localStorage.getItem('puff-session');
+  var u=null;
+  if(session){try{var users=JSON.parse(localStorage.getItem('puff-users')||'{}');var sessions=JSON.parse(localStorage.getItem('puff-sessions')||'{}');var uid=Object.keys(sessions).find(function(k){return sessions[k]===session});if(uid&&users[uid])u=users[uid]}catch(){}}
+  if(!u){
+    var ov=document.getElementById('checkout-overlay');
+    document.getElementById('checkout-body').innerHTML='<div style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:1rem">馃敀</div><h3 style="font-family:var(--mono);font-weight:300;margin-bottom:0.5rem" data-i="st_login_first">璇峰厛鐧诲綍鍚庡啀璐拱</h3><div class="ck-actions"><button class="btn bo" onclick="closeCheckout()" data-i="st_cancel">鍙栨秷</button><a href="register.html" class="btn bp" style="text-decoration:none">鐧诲綍</a></div></div>';
+    ov.classList.add('show');return
+  }
+  var total=c.reduce(function(s,x){var p=PRODUCTS.find(pr=>pr.id===x.id);return s+(p?p.price*x.qty:0)},0);
+  var puff=c.reduce(function(s,x){var p=PRODUCTS.find(pr=>pr.id===x.id);return s+(p?p.puff*x.qty:0)},0);
+  document.getElementById('ck-summary').innerHTML=c.map(function(x){var p=PRODUCTS.find(pr=>pr.id===x.id);return p?'<div class="ck-row"><span>'+p.name+' x'+x.qty+'</span><span>楼'+(p.price*x.qty)+'</span></div>':''}).join('')+'<div class="ck-row total"><span data-i="st_total">鍚堣</span><span>楼'+total+'</span></div><div class="ck-row"><span>PUFF 濂栧姳</span><span style="color:var(--pink)">+'+puff+' PUFF</span></div>';
+  document.getElementById('checkout-success').style.display='none';
+  document.getElementById('checkout-body').querySelector('.ck-form').style.display='block';
+  document.querySelectorAll('#ck-name,#ck-phone,#ck-addr').forEach(function(el){el.value=''});
+  document.getElementById('checkout-overlay').classList.add('show');
+}
+function closeCheckout(){document.getElementById('checkout-overlay').classList.remove('show')}
+function placeOrder(){
+  var c=getCart();if(!c.length)return;
+  var total=c.reduce(function(s,x){var p=PRODUCTS.find(pr=>pr.id===x.id);return s+(p?p.price*x.qty:0)},0);
+  var puffTotal=c.reduce(function(s,x){var p=PRODUCTS.find(pr=>pr.id===x.id);return s+(p?p.puff*x.qty:0)},0);
+  var name=document.getElementById('ck-name').value.trim(),phone=document.getElementById('ck-phone').value.trim(),addr=document.getElementById('ck-addr').value.trim();
+  if(!name||!phone||!addr){showNotif('璇峰～鍐欏畬鏁翠俊鎭?);return}
+  var d=JSON.parse(localStorage.getItem('puff-admin-data')||'null');
+  if(!d){d={products:[],orders:[],users:[],nfts:[],partners:[],nextId:{product:17,order:1,user:4,nft:110,partner:5}}}
+  var session=localStorage.getItem('puff-session');
+  if(!session){showNotif('璇峰厛鐧诲綍');return}
+  var sessions=JSON.parse(localStorage.getItem('puff-sessions')||'{}');
+  var uid=Object.keys(sessions).find(function(k){return sessions[k]===session});
+  var users=JSON.parse(localStorage.getItem('puff-users')||'{}');
+  var user=users[uid];
+  if(!user){showNotif('鐢ㄦ埛涓嶅瓨鍦?);return}
+  var oid=Date.now().toString(36);
+  var order={id:oid,userId:uid,items:c.map(function(x){var p=PRODUCTS.find(pr=>pr.id===x.id);return{productId:x.id,productName:p?p.name:'',qty:x.qty}}),amount:total,puffReward:puffTotal,status:'pending',createdAt:new Date().toISOString(),shipping:{name:name,phone:phone,address:addr}};
+  d.orders.push(order);
+  d.nextId.order++;
+  user.balance=(user.balance||0)+puffTotal;
+  user.orderCount=(user.orderCount||0)+1;
+  users[uid]=user;
+  localStorage.setItem('puff-admin-data',JSON.stringify(d));
+  localStorage.setItem('puff-users',JSON.stringify(users));
+  localStorage.removeItem('puff-cart');
+  document.getElementById('checkout-success').style.display='block';
+  document.getElementById('checkout-body').querySelector('.ck-form').style.display='none';
+  document.getElementById('ck-order-number').textContent='#'+oid;
+  document.getElementById('ck-puff-earned').textContent='+'+puffTotal+' PUFF';
+  renderCart();
+}
+function updateCartI18n(){document.querySelectorAll('[data-i]').forEach(function(el){var k=el.getAttribute('data-i');if(i18n[lang]&&i18n[lang][k])el.textContent=i18n[lang][k]})}
+
+// ====== i18n ======
+function sw(l){lang=l;localStorage.setItem('puff-lang',l);updateCartI18n();document.querySelectorAll('.ls button').forEach(function(b){b.classList.remove('ac')});document.getElementById('b'+l).classList.add('ac');updateNavUser()}
+sw(lang);
+
+// ====== Nav user ======
+function updateNavUser(){
+  var el=document.getElementById('nav-user-info');
+  var session=localStorage.getItem('puff-session');
+  if(!session){el.style.display='none';return}
+  try{
+    var sessions=JSON.parse(localStorage.getItem('puff-sessions')||'{}');
+    var users=JSON.parse(localStorage.getItem('puff-users')||'{}');
+    var uid=Object.keys(sessions).find(function(k){return sessions[k]===session});
+    if(uid&&users[uid]){document.getElementById('nav-user-name').textContent=users[uid].username||uid.slice(0,8);el.style.display='inline-flex'}else{el.style.display='none'}
+  }catch(){el.style.display='none'}
+}
+function doLogout(){localStorage.removeItem('puff-session');updateNavUser();window.location.href='index.html'}
+updateNavUser();
+</script>
+</body>
+</html>

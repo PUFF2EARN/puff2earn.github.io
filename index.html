@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>PUFF-CHAIN 路 Web3.0 电子雾化数字生态平台</title>
+<meta name="description" content="PUFF-CHAIN 鍩轰簬浠ュお鍧婄殑 Web3.0 鐢靛瓙闆惧寲鏁板瓧鐢熸€佸钩鍙?鈥?鑷富閽卞寘 路 NFT 鏁板瓧钘忓搧 路 PUFF 浠ｅ竵 路 浜岀淮鐮佷骇鍝佹函婧?路 浜у搧鍟嗗簵 路 鍚堜紮浜虹綉缁? />
+<meta property="og:title" content="PUFF-CHAIN 路 Web3.0 Vape Digital Platform" />
+<meta property="og:description" content="鍩轰簬浠ュお鍧婄殑鐢靛瓙闆惧寲鏁板瓧鐢熸€佸钩鍙般€傞€氳繃鍖哄潡閾炬妧鏈噸鏋勭數瀛愮儫琛屼笟鐨勬秷璐逛綋楠屼笌浠峰€煎垎閰嶃€? />
+<meta property="og:url" content="https://puff2earn.com" />
+<meta name="keywords" content="鐢靛瓙鐑?Web3.0,鍖哄潡閾?NFT,浠ュお鍧?闆惧寲鍣?鐢靛瓙闆惧寲,鎵爜杩芥函" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<script id="i18n-json" type="application/json">{"zh":{"nav_h":"首页","nav_r":"路线","nav_n":"藏品","nav_t":"追溯","nav_s":"商店","nav_e":"生态","nav_p":"协议","ac_t":"接入 PUFF-CHAIN","ac_s":"扫码验证产品真伪 - 铸造链上数字凭证","ac_q1":"扫码验证","ac_q2":"注册账号","ac_q3":"扫码登录","ft":"· Web3.0 数字雾化生态","ft_wp":"白皮书","ft_yr":"© 2026 PUFF-CHAIN · Built on Ethereum","wl_l":"// 钱包","wl_t":"平台钱包"},"en":{"nav_h":"Home","nav_r":"Route","nav_n":"NFT","nav_t":"Trace","nav_s":"Shop","nav_e":"Eco","nav_p":"Protocol","ac_t":"Enter PUFF-CHAIN","ac_s":"Scan to verify products · Mint on-chain NFT","ac_q1":"Scan Verify","ac_q2":"Register","ac_q3":"QR Login","ft":"· Web3.0 Vape Digital Ecosystem","ft_wp":"Whitepaper","ft_yr":"© 2026 PUFF-CHAIN · Built on Ethereum","wl_l":"// Wallet","wl_t":"Platform Wallet"},"ko":{"nav_h":"홈","nav_r":"루트","nav_n":"NFT","nav_t":"추적","nav_s":"쇼핑","nav_e":"생태","nav_p":"프로토콜","ac_t":"PUFF-CHAIN 입장","ac_s":"스캔하여 제품 확인 · NFT 민팅","ac_q1":"스캔","ac_q2":"가입","ac_q3":"QR 로그인","ft":"· Web3.0 디지털 베이프 생태계","ft_wp":"백서","ft_yr":"© 2026 PUFF-CHAIN · Built on Ethereum","wl_l":"// 지갑","wl_t":"플랫폼 지갑"}</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<nav>
+  <div class="logo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+    <span>//</span> PUFF<span>-CHAIN</span>
+  </div>
+  <div class="nr" id="nr">
+    <ul id="nu">
+      <li><a href="#home" data-i="nav_h">棣栭〉</a></li>
+      <li><a href="#roadmap" data-i="nav_r">璺嚎</a></li>
+      <li><a href="#nft" data-i="nav_n">钘忓搧</a></li>
+      <li><a href="#trace" data-i="nav_t">杩芥函</a></li>
+      <li><a href="store.html" data-i="nav_s">鍟嗗簵</a></li>
+      <li><a href="#eco" data-i="nav_e">鐢熸€?/a></li>
+      <li><a href="#partner" data-i="nav_p">鍚堜紮</a></li>
+      <li><a href="#vision" data-i="nav_v">鎰挎櫙</a></li>
+      <li><a href="#access" data-i="nav_l">鎺ュ叆</a></li>
+      <li><a href="wallet.html" data-i="nav_w">閽卞寘</a></li>
+      <li><a href="register.html" data-i="nav_register" style="color:var(--pink)">娉ㄥ唽</a></li>
+    </ul>
+    <div class="ls">
+      <button onclick="sw('zh')" id="bzh">涓?/button>
+      <button onclick="sw('en')" id="ben">EN</button>
+      <button onclick="sw('ko')" id="bko">頃?/button>
+    </div>
+  </div>
+  <button class="hb" id="hb2"><span></span><span></span><span></span></button>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hg"></div>
+  <div class="hc">
+    <div class="hb2"><span class="d"></span> <span data-i="hero_b">Web3.0 路 Pre-Alpha</span></div>
+    <h1><span class="gl" data-text="PUFF-CHAIN">PUFF-CHAIN</span></h1>
+    <p data-i="hero_sub">鍩轰簬浠ュお鍧婄殑鐢靛瓙闆惧寲鏁板瓧骞冲彴 鈥?鑷富閽卞寘 路 NFT 路 浠ｅ竵 路 浜岀淮鐮佽拷婧?路 浜у搧鍟嗗簵 路 鍚堜紮浜虹綉缁?/p>
+    <div class="ha">
+      <a href="store.html" class="btn bp" data-i="hero_sh">閫夎喘浜у搧 鈻?/a>
+      <a href="#vision" class="btn bo" data-i="hero_v">鍟嗕笟鎰挎櫙</a>
+      <a href="#partner" class="btn bo" data-i="hero_pa">鎴愪负鍚堜紮浜?/a>
+    </div>
+  </div>
+  <div class="si"><span data-i="hero_sc">Scroll</span><div class="sl"></div></div>
+</section>
+
+<section id="roadmap">
+  <div class="slb" data-i="rm_l">// ROADMAP</div>
+  <h2 class="st" data-i="rm_t">涓夐樁娈?路 <span>璺嚎</span></h2>
+  <div class="rm">
+    <div class="rm-item">
+      <span class="tag" data-i="rm_p1s">ALPHA</span>
+      <h3 data-i="rm_p1h">灏侀棴閽卞寘 路 绀剧兢闂幆</h3>
+      <ul>
+        <li data-i="rm_p1a">绯荤粺鑷富鐢熸垚閽卞寘锛岀ぞ缇ゅ唴閮ㄦ祦閫?/li>
+        <li data-i="rm_p1b">涓嶉潰鍚戝叕閾惧競鍦猴紝涓撴敞绀剧兢鍐峰惎鍔?/li>
+        <li data-i="rm_p1c">浜岀淮鐮佹壂鐮佹敞鍐?鐧诲綍 路 绀句氦灞炴€?路 绉垎娴佽浆</li>
+        <li data-i="rm_p1d">闈㈠悜娑堣垂鑰呬笌鐢靛瓙鐑?Web3.0 鍚堜綔鏂?/li>
+      </ul>
+    </div>
+    <div class="rm-item">
+      <span class="tag" data-i="rm_p2s">BETA</span>
+      <h3 data-i="rm_p2h">鍏摼鎺ュ叆 路 NFT 閾搁€?/h3>
+      <ul>
+        <li data-i="rm_p2a">寮曞叆浠ュお鍧婂叕閾鹃挶鍖?/li>
+        <li data-i="rm_p2b">NFT 鏁板瓧钘忓搧閾搁€犱笌灞曠ず 路 鎵爜閾搁€?/li>
+        <li data-i="rm_p2c">鍖哄潡閾剧ぞ缇や氦鏄撲笌璐ㄦ娂</li>
+        <li data-i="rm_p2d">浜岀淮鐮佷骇鍝佹函婧愪笂閾?/li>
+      </ul>
+    </div>
+    <div class="rm-item">
+      <span class="tag" data-i="rm_p3s">MAINNET</span>
+      <h3 data-i="rm_p3h">浠ｅ竵婵€鍔?路 鍏ㄩ潰寮€鏀?/h3>
+      <ul>
+        <li data-i="rm_p3a">鏍规嵁鎸佹湁铏氭嫙璧勪骇鍋氫唬甯佹縺鍔?/li>
+        <li data-i="rm_p3b">浜岀淮鐮佸叏閾捐矾婧簮 + 浜у搧鏁板瓧瀛敓</li>
+        <li data-i="rm_p3c">Web3.0 鍖哄煙鍚堜綔鏂圭綉缁滃叏鐞冩嫇灞?/li>
+        <li data-i="rm_p3d">閫愭閲婃斁鍏摼甯傚満锛岀敤鎴烽┍鍔?/li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="nft">
+  <div class="slb" data-i="nf_l">// NFT</div>
+  <h2 class="st" data-i="nf_t">鏁板瓧 路 <span>钘忓搧</span></h2>
+  <div class="ng">
+    <div class="nc"><div class="nv"><div class="go"></div><div class="ph">&loz; 001</div></div><div class="ni"><h4>GENESIS &middot; <span data-i="nf_n1">鍒濆彿</span></h4><div class="m"><span>#001</span><span class="pr" data-i="nf_un">鏈摳閫?/span></div></div></div>
+    <div class="nc"><div class="nv"><div class="go"></div><div class="ph">&loz; 002</div></div><div class="ni"><h4>CYBER CLOUD &middot; <span data-i="nf_n2">璧涘崥浜?/span></h4><div class="m"><span>#002</span><span class="pr" data-i="nf_un">鏈摳閫?/span></div></div></div>
+    <div class="nc"><div class="nv"><div class="go"></div><div class="ph">&loz; 003</div></div><div class="ni"><h4>NEON DROP &middot; <span data-i="nf_n3">闇撹櫣闆炬淮</span></h4><div class="m"><span>#003</span><span class="pr" data-i="nf_un">鏈摳閫?/span></div></div></div>
+    <div class="nc"><div class="nv"><div class="go"></div><div class="ph">&loz; 004</div></div><div class="ni"><h4>PUFF GENESIS NFT</h4><div class="m"><span data-i="nf_lm">闄愬畾</span><span class="pr" data-i="nf_so">鍗冲皢閾搁€?/span></div></div></div>
+  </div>
+</section>
+
+<section id="trace">
+  <div class="slb" data-i="tr_l">// TRACE & MINT</div>
+  <h2 class="st" data-i="tr_t">浜岀淮鐮?路 杩芥函 路 <span>閾搁€?/span></h2>
+  <div class="qc">
+    <div><div class="ib qr"></div><h4 data-i="tr_c1h">浜岀淮鐮佷骇鍝佹函婧?/h4><p data-i="tr_c1d">姣忎竴浠朵骇鍝佹嫢鏈夊敮涓€鏁板瓧韬唤锛屾壂鐮佸嵆鏌ュ叏閾捐矾淇℃伅</p></div>
+    <div><div class="ib ch"></div><h4 data-i="tr_c2h">鎵爜閾搁€?NFT</h4><p data-i="tr_c2d">娑堣垂鑰呮壂鐮佸嵆鍙皢浜у搧鏁板瓧瀛敓閾搁€犱负閾句笂 NFT</p></div>
+    <div><div class="ib ch"></div><h4 data-i="tr_c3h">鍖哄潡閾惧睍绀?/h4><p data-i="tr_c3d">鎵€鏈夋函婧愭暟鎹笌 NFT 瀛樺偍浜庝互澶潑锛屽叕寮€鍙煡</p></div>
+  </div>
+  <div class="fw">
+    <span class="s ac" data-i="tr_f1">鎵爜浜у搧</span><span class="ar">&rarr;</span>
+    <span class="s" data-i="tr_f2">鏌ョ湅婧簮</span><span class="ar">&rarr;</span>
+    <span class="s" data-i="tr_f3">閾搁€?NFT</span><span class="ar">&rarr;</span>
+    <span class="s" data-i="tr_f4">閾句笂瀛樿瘉</span><span class="ar">&rarr;</span>
+    <span class="s" data-i="tr_f5">鎸佹湁娴佽浆</span>
+  </div>
+</section>
+
+<section id="store">
+  <div class="slb" data-i="st_l">// STORE</div>
+  <h2 class="st" data-i="st_t">浜у搧 路 <span>鍟嗗簵</span></h2>
+  <div class="sg">
+    <div class="pdc"><div class="pv"><span class="badge nft">NFT</span>PUFF-X1</div><div class="pi"><h4>PUFF-X1 &middot; <span data-i="st_p1n">鍒濅唬闆惧寲鍣?/span></h4><p class="desc" data-i="st_p1d">棣栨缁戝畾 Web3.0 鏁板瓧韬唤鐨勬櫤鑳介浘鍖栬澶?/p><div class="br"><span class="prc">楼 299</span><button class="bb" data-i="st_b">璐拱</button></div></div></div>
+    <div class="pdc"><div class="pv"><span class="badge lt" data-i="st_lm">闄愬畾</span>CYBER-POD</div><div class="pi"><h4>CYBER-POD &middot; <span data-i="st_p2n">璧涘崥鐑熷脊</span></h4><p class="desc" data-i="st_p2d">璧涘崥鏈嬪厠涓婚闄愬畾鐑熷脊锛屽惈 NFT 绌烘姇璧勬牸</p><div class="br"><span class="prc">楼 89</span><button class="bb" data-i="st_b">璐拱</button></div></div></div>
+    <div class="pdc"><div class="pv">NEON-KIT</div><div class="pi"><h4>NEON KIT &middot; <span data-i="st_p3n">闇撹櫣濂楄</span></h4><p class="desc" data-i="st_p3d">闆惧寲鍣?+ 鐑熷脊 + 鍒涗笘 NFT锛屽叆闂?Web3.0</p><div class="br"><span class="prc">楼 499</span><button class="bb" data-i="st_b">璐拱</button></div></div></div>
+    <div class="pdc"><div class="pv"><span class="badge nft">NFT</span>PUFF-MAX</div><div class="pi"><h4>PUFF-MAX &middot; <span data-i="st_p4n">鏃楄埌鐗?/span></h4><p class="desc" data-i="st_p4d">鏃楄埌闆惧寲璁惧锛屽唴缃尯鍧楅摼鑺墖</p><div class="br"><span class="prc">楼 699</span><button class="bb" data-i="st_b">璐拱</button></div></div></div>
+  </div>
+</section>
+
+<section id="eco">
+  <div class="slb" data-i="ec_l">// ECOSYSTEM</div>
+  <h2 class="st" data-i="ec_t">浠ｅ竵 路 浜ゆ槗 路 <span>婵€鍔?/span></h2>
+  <div class="eg">
+    <div class="ec"><div class="ic">鈾?/div><h4 data-i="ec_c1h">TOKEN 婵€鍔?/h4><p data-i="ec_c1d">鏍规嵁鎸佹湁铏氭嫙璧勪骇鍒嗛厤鐢熸€佷唬甯?/p></div>
+    <div class="ec"><div class="ic">鈼?/div><h4 data-i="ec_c2h">绀剧兢浜ゆ槗</h4><p data-i="ec_c2d">P2P 鏁板瓧钘忓搧浜ゆ槗锛屾櫤鑳藉悎绾︾粨绠?/p></div>
+    <div class="ec"><div class="ic">鈾?/div><h4 data-i="ec_c3h">璐ㄦ娂姹?/h4><p data-i="ec_c3d">閿佸畾浠ｅ竵鑾峰緱骞冲彴鏉冪泭涓庢敹鐩?/p></div>
+    <div class="ec"><div class="ic">鈾?/div><h4 data-i="ec_c4h">鍚堜綔鏂圭綉缁?/h4><p data-i="ec_c4d">闈㈠悜鐢靛瓙鐑?Web3.0 鍖哄煙鍚堜綔鏂?/p></div>
+  </div>
+</section>
+
+<section id="partner">
+  <div class="slb" data-i="pa_l">// PARTNERS</div>
+  <h2 class="st" data-i="pa_t">鍚堜紮浜?路 <span>鎷涘嫙</span></h2>
+  <div class="pg">
+    <div class="pt"><div class="ti">鈾?/div><h4 data-i="pa_c1h">鍖哄煙鍚堜紮浜?/h4><span class="tag" data-i="pa_c1tag">RECRUITING</span><ul><li data-i="pa_c1a">鍖哄煙鐙杩愯惀鏉?/li><li data-i="pa_c1b">浜彈骞冲彴浜ゆ槗鍒嗙孩</li><li data-i="pa_c1c">涓撳睘鍚堜紮浜?NFT 韬唤</li><li data-i="pa_c1d">浼樺厛鍙備笌鍏摼娌荤悊</li></ul></div>
+    <div class="pt"><div class="ti">鈼?/div><h4 data-i="pa_c2h">鍝佺墝鍚堜綔鏂?/h4><span class="tag cy" data-i="pa_c2tag">PARTNER</span><ul><li data-i="pa_c2a">浜у搧閾句笂婧簮 + NFT 缁戝畾</li><li data-i="pa_c2b">鍝佺墝鏁板瓧璧勪骇鍙戣</li><li data-i="pa_c2c">鍏变韩鐢ㄦ埛绀剧兢鍩虹璁炬柦</li><li data-i="pa_c2d">鑱斿悎钀ラ攢娲诲姩鏀寔</li></ul></div>
+    <div class="pt"><div class="ti">鈾?/div><h4 data-i="pa_c3h">鑺傜偣鍚堜紮浜?/h4><span class="tag" data-i="pa_c3tag">COMING SOON</span><ul><li data-i="pa_c3a">杩愯鐢熸€佽妭鐐瑰弬涓庡叡璇?/li><li data-i="pa_c3b">鑾峰彇浠ｅ竵鍖哄潡濂栧姳</li><li data-i="pa_c3c">閾句笂娌荤悊鎶曠エ鏉?/li><li data-i="pa_c3d">鐢熸€佸熀閲戜紭鍏堣祫鍔?/li></ul></div>
+  </div>
+  <div class="pca"><h3 data-i="pa_cta">鍔犲叆 PUFF-CHAIN 鍚堜紮浜虹綉缁?/h3><p data-i="pa_ctap">濉啓鍚堜綔鐢宠琛紝鎴戜滑灏嗗湪 48 灏忔椂鍐呬笌鎮ㄨ仈绯?/p><a href="register.html" class="btn bp" data-i="pa_ctab">鐢宠鍚堜綔 鈻?/a></div>
+</section>
+
+<section id="vision">
+  <div class="slb" data-i="vi_l">// VISION</div>
+  <h2 class="st" data-i="vi_t">鍟嗕笟 路 <span>鎰挎櫙</span></h2>
+  <div class="vc">
+    <div class="t"><p data-i="vi_p1">PUFF-CHAIN 鑷村姏浜庢垚涓哄叏鐞冮涓?Web3.0 鐢靛瓙闆惧寲鏁板瓧鐢熸€佸钩鍙般€傞€氳繃鍖哄潡閾炬妧鏈噸鏋勭數瀛愮儫琛屼笟鐨勬秷璐逛綋楠屼笌浠峰€煎垎閰嶃€?/p><p data-i="vi_p2">浠庝骇鍝佹函婧愬埌鏁板瓧钘忓搧锛屼粠浠ｅ竵婵€鍔卞埌鍚堜紮浜虹綉缁滐紝鏋勫缓娑堣垂鑰呫€佸搧鐗屾柟銆佸悎浣滄柟涓夋柟鍏辫耽鐨勫幓涓績鍖栫敓鎬併€?/p><p data-i="vi_p3">绗竴闃舵绀剧兢鍐峰惎鍔紝绗簩闃舵鍏摼 NFT 涓庝氦鏄擄紝绗笁闃舵浠ｅ竵椹卞姩鍏ㄧ悆鎵╁紶銆?/p></div>
+    <div class="vs"><div class="vs2"><div class="n">3</div><div class="l">闃舵</div></div><div class="vs2"><div class="n">4</div><div class="l">浜у搧绾?/div></div><div class="vs2"><div class="n">ETH</div><div class="l">涓婚摼</div></div><div class="vs2"><div class="n">NFT</div><div class="l">钘忓搧</div></div></div>
+  </div>
+</section>
+
+<section id="access">
+  <div class="slb" data-i="ac_l">// ACCESS</div>
+  <h2 class="st" data-i="ac_t">鎵爜 路 <span>鎺ュ叆</span></h2>
+  <div class="ql"><p data-i="ac_p">娑堣垂鑰呬笌鍚堜綔鏂归€氳繃浜岀淮鐮佹壂鐮佸揩閫熸敞鍐?鐧诲綍锛屼竴姝ヨ繘鍏?Web3.0 鏁板瓧闆惧寲鐢熸€併€?/p><div class="qrs"><div class="qr-item"><div id="qr-scan"></div><div class="qr-label"><span data-i="ac_q1">扫码验证</span><small>scan.html</small></div></div><div class="qr-item"><div id="qr-reg"></div><div class="qr-label"><span data-i="ac_q2">注册账号</span><small>register.html</small></div></div><div class="qr-item"><div id="qr-login"></div><div class="qr-label"><span data-i="ac_q3">扫码登录</span><small>register.html?qr=1</small></div></div></div><span data-i="ac_q1">鎵爜楠岃瘉</span></a><a href="register.html" class="qr-link"><div class="qr-icon-wrap">馃懁</div><span data-i="ac_q2">娉ㄥ唽璐﹀彿</span></a><a href="register.html?qr=1" class="qr-link"><div class="qr-icon-wrap">馃攼</div><span data-i="ac_q3">鎵爜鐧诲綍</span></a></div></div>
+</section>
+
+<footer>
+  <div><span style="font-family:var(--mono);color:var(--cyan);letter-spacing:2px">PUFF-CHAIN</span><span style="color:var(--gray);margin-left:8px" data-i="ft"> 路 Web3.0 鏁板瓧闆惧寲鐢熸€?/span></div>
+  <div style="display:flex;gap:1.5rem;font-family:var(--mono);font-size:0.65rem;letter-spacing:1px">
+    <a href="https://github.com/PUFF2EARN/puff2earn.github.io" target="_blank" style="color:var(--gray)" data-i="ft_wp">Github</a>
+    <a href="https://github.com/PUFF2EARN/puff2earn.github.io" target="_blank" style="color:var(--gray)">Github</a>
+    <a href="https://discord.gg/puffchain" target="_blank" style="color:var(--gray)">Discord</a>
+  </div>
+  <div style="color:var(--gray);font-size:0.55rem;font-family:var(--mono)" data-i="ft_yr">漏 2026 PUFF-CHAIN 路 Built on Ethereum</div>
+</footer>
+
+<script>
+var i18n=JSON.parse(document.getElementById("i18n-json").textContent);
+var cur="zh";
+function sw(l){
+  cur=l;
+  document.querySelectorAll("[data-i]").forEach(function(el){
+    var k=el.getAttribute("data-i");
+    if(i18n[l]&&i18n[l][k]){
+      var t=i18n[l][k];
+      if(t.indexOf("<")>=0){el.innerHTML=t}else{el.textContent=t}
+    }
+  });
+  document.querySelectorAll("#bzh,#ben,#bko").forEach(function(b){b.classList.remove("a")});
+  document.getElementById("b"+l).classList.add("a");
+}
+sw("zh");new QRCode(document.getElementById("qr-scan"),{text:"https://puff2earn.com/scan.html",width:120,height:120,colorDark:"#00fff9",colorLight:"#0a0e1a",correctLevel:QRCode.CorrectLevel.H});new QRCode(document.getElementById("qr-reg"),{text:"https://puff2earn.com/register.html",width:120,height:120,colorDark:"#00fff9",colorLight:"#0a0e1a",correctLevel:QRCode.CorrectLevel.H});new QRCode(document.getElementById("qr-login"),{text:"https://puff2earn.com/register.html?qr=1",width:120,height:120,colorDark:"#00fff9",colorLight:"#0a0e1a",correctLevel:QRCode.CorrectLevel.H});new QRCode(document.getElementById("qr-scan"),{text:"https://puff2earn.com/scan.html",width:120,height:120,colorDark:"#00fff9",colorLight:"#0a0e1a",correctLevel:QRCode.CorrectLevel.H});new QRCode(document.getElementById("qr-reg"),{text:"https://puff2earn.com/register.html",width:120,height:120,colorDark:"#00fff9",colorLight:"#0a0e1a",correctLevel:QRCode.CorrectLevel.H});new QRCode(document.getElementById("qr-login"),{text:"https://puff2earn.com/register.html?qr=1",width:120,height:120,colorDark:"#00fff9",colorLight:"#0a0e1a",correctLevel:QRCode.CorrectLevel.H});
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</body>
+</html>
+

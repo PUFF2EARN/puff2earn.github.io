@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>PUFF-CHAIN · 钱包</title>
+<meta name="description" content="PUFF-CHAIN 区块链钱包，管理 PUFF 代币余额和 NFT 数字藏品，模拟扫码获取奖励。" />
+<link rel="stylesheet" href="style.css" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+.wallet-page .scan-item .si-puffs{font-size:0.75rem}
+.wallet-card .empty-state{font-family:var(--mono);font-size:0.7rem;color:var(--gray);text-align:center;padding:1.5rem}
+</style>
+</head>
+<body>
+
+<script id="i18n-wallet" type="application/json">
+{"zh":{"wl_t":"平台钱包","wl_bal":"🔗 数字资产","wl_connect":"连接钱包","wl_generate":"📱 模拟扫码","wl_mint":"✨ 铸造 NFT","wl_records":"📱 扫码记录","wl_nft":"⛓️ 数字藏品 · 区块链九宫格","wl_empty":"暂无扫码记录","wl_insufficient":"PUFF 不足!","wl_full":"NFT 已满!","wl_connected":"已连接","wl_disconnect":"断开","wl_nft_val":"NFT 藏品估值","wl_total_val":"总估值","wl_puff":"PUFF"},"en":{"wl_t":"Wallet","wl_bal":"🔗 Digital Assets","wl_connect":"Connect Wallet","wl_generate":"📱 Simulate Scan","wl_mint":"✨ Mint NFT","wl_records":"📱 Scan Records","wl_nft":"⛓️ NFT Gallery · 3×3 Grid","wl_empty":"No scan records","wl_insufficient":"Insufficient PUFF!","wl_full":"Grid is full!","wl_connected":"Connected","wl_disconnect":"Disconnect","wl_nft_val":"NFT Valuation","wl_total_val":"Total Valuation","wl_puff":"PUFF"},"ko":{"wl_t":"지갑","wl_bal":"🔗 디지털 자산","wl_connect":"지갑 연결","wl_generate":"📱 스캔 시뮬레이션","wl_mint":"✨ NFT 발행","wl_records":"📱 스캔 기록","wl_nft":"⛓️ NFT 갤러리 · 3×3 그리드","wl_empty":"스캔 기록 없음","wl_insufficient":"PUFF 부족!","wl_full":"그리드가 가득 찼습니다!","wl_connected":"연결됨","wl_disconnect":"연결 해제","wl_nft_val":"NFT 평가액","wl_total_val":"총 평가액","wl_puff":"PUFF"}}
+</script>
+
+<nav>
+  <div class="logo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+    <span>//</span> PUFF<span>-CHAIN</span>
+  </div>
+  <div class="nr" id="nr">
+    <ul>
+      <li><a href="index.html">&larr; HOME</a></li>
+      <li><a href="store.html">商店</a></li>
+      <li><a href="register.html">注册</a></li>
+      <li><a href="scan.html">扫码</a></li>
+    </ul>
+    <div class="ls">
+      <button onclick="sw('zh')" id="bzh">中</button>
+      <button onclick="sw('en')" id="ben">EN</button>
+      <button onclick="sw('ko')" id="bko">한</button>
+    </div>
+  </div>
+  <button class="hb" id="hb2"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="wallet-page">
+  <section id="wallet-main" style="max-width:700px">
+    <div class="slb">// WALLET</div>
+    <h2 class="st" id="wl-title">平台钱包</h2>
+    
+    <div class="wallet-dashboard" style="max-width:700px">
+      <div class="wallet-card balance-card">
+        <div class="wc-header">
+          <span id="wl-bal-label">🔗 数字资产</span>
+          <button class="wallet-connect-btn" id="wallet-connect-btn">连接钱包</button>
+        </div>
+        <div class="balance-display">
+          <span class="balance-num" id="balance-num">1,284.50</span>
+          <span class="balance-unit">PUFF</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:0.65rem;color:var(--gray);padding:0 10px">
+          <span id="wl-nft-val-label">NFT 藏品估值: <span id="nft-val" style="color:var(--purple)">0</span> PUFF</span>
+          <span id="wl-total-val-label">总估值: <span id="total-val" style="color:var(--cyan)">1,284</span> PUFF</span>
+        </div>
+        <div style="margin-top:1rem;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+          <button class="btn bp" id="gen-scan-btn" style="font-size:0.6rem;padding:6px 14px">📱 模拟扫码</button>
+          <button class="btn bo" id="mint-nft-btn" style="font-size:0.6rem;padding:6px 14px;color:var(--purple);border-color:var(--purple)">✨ 铸造 NFT</button>
+        </div>
+      </div>
+      
+      <div class="wallet-card">
+        <h4 id="wl-records-label">📱 扫码记录</h4>
+        <div class="scan-records" id="scan-records"></div>
+      </div>
+      
+      <div class="wallet-card nft-card">
+        <h4 id="wl-nft-label">⛓️ 数字藏品 · 区块链九宫格</h4>
+        <p style="font-size:0.65rem;color:var(--gray);font-family:var(--mono);margin-bottom:10px" id="wl-nft-hint">点击空位铸造 NFT（消耗 50 PUFF）</p>
+        <div class="nft-grid-9" id="nft-grid-9"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div><span style="font-family:var(--mono);color:var(--cyan);letter-spacing:2px">PUFF-CHAIN</span><span style="color:var(--gray);margin-left:8px"> &middot; </span>区块链钱包</div>
+  <div class="le"><a href="index.html">首页</a> &middot; <a href="store.html">商店</a><br /><span>&copy; 2026 PUFF-CHAIN</span></div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.11.0/dist/ethers.umd.min.js"></script>
+<script src="web3.js"></script>
+<script>
+var WALLET = JSON.parse(localStorage.getItem('puff-wallet') || 'null') || {
+  connected: false, address: '', balance: 1284.50,
+  scanRecords: [
+    {item:"ELFBAR BC5000",time:"2026-05-15 14:23",puffs:50},
+    {item:"SMOK Nord 5",time:"2026-05-14 09:15",puffs:80},
+    {item:"Community Airdrop",time:"2026-05-13 20:00",puffs:200}
+  ],
+  nfts: [null, null, null, null, null, null, null, null, null]
+};
+var NFT_LIST = [
+  {name:"Genesis Cloud",icon:"☁️",rarity:"rare"},
+  {name:"Cyber Wave",icon:"🌊",rarity:"common"},
+  {name:"Neon Drop",icon:"💧",rarity:"epic"},
+  {name:"PUFF-X1",icon:"🔷",rarity:"common"},
+  {name:"Vape Aura",icon:"✨",rarity:"rare"},
+  {name:"Block Vapor",icon:"🧊",rarity:"common"},
+  {name:"Vapor Ghost",icon:"👻",rarity:"epic"},
+  {name:"Pixel Puff",icon:"🎮",rarity:"rare"},
+  {name:"Chain Link",icon:"🔗",rarity:"common"}
+];
+var RARITY_VAL = {common:30, rare:80, epic:200};
+var products = ["ELFBAR BC5000","SMOK Novo 5","VAPORESSO XROS 3","UWELL Caliburn A3","GeekVape Wenax Q","Voopoo Argus G","Naked 100 Lava Flow","Dinner Lady Lemon Tart","Puff Chain X1","Juice Head Guava"];
+
+var lang = localStorage.getItem('puff-lang') || 'zh';
+var i18n = JSON.parse(document.getElementById('i18n-wallet').textContent);
+
+function t(key){return i18n[lang]&&i18n[lang][key]||key}
+
+function saveWallet(){localStorage.setItem('puff-wallet',JSON.stringify(WALLET))}
+function renderWallet(){
+  document.getElementById('balance-num').textContent = WALLET.connected ? WALLET.balance.toFixed(2) : '--';
+  var btn = document.getElementById('wallet-connect-btn');
+  btn.textContent = WALLET.connected ? WALLET.address.slice(0,6)+'...'+WALLET.address.slice(-4) : t('wl_connect');
+  // Labels
+  document.getElementById('wl-title').innerHTML = t('wl_t').replace('钱包','<span style="color:var(--cyan)">钱包</span>').replace('Wallet','<span style="color:var(--cyan)">Wallet</span>').replace('지갑','<span style="color:var(--cyan)">지갑</span>');
+  document.getElementById('wl-bal-label').textContent = t('wl_bal');
+  document.getElementById('wl-nft-val-label').innerHTML = t('wl_nft_val')+': <span id="nft-val" style="color:var(--purple)">0</span> PUFF';
+  document.getElementById('wl-total-val-label').innerHTML = t('wl_total_val')+': <span id="total-val" style="color:var(--cyan)">0</span> PUFF';
+  document.getElementById('wl-records-label').textContent = t('wl_records');
+  document.getElementById('wl-nft-label').textContent = t('wl_nft');
+  document.getElementById('wl-nft-hint').textContent = lang==='zh' ? '点击空位铸造 NFT（消耗 50 PUFF）' : lang==='en' ? 'Click empty slot to mint NFT (costs 50 PUFF)' : '빈 슬롯을 클릭하여 NFT 발행 (50 PUFF 소모)';
+  document.getElementById('gen-scan-btn').innerHTML = '📱 '+t('wl_generate');
+  document.getElementById('mint-nft-btn').innerHTML = '✨ '+t('wl_mint');
+  
+  // NFT valuation
+  var nftVal = 0;
+  WALLET.nfts.forEach(function(n){if(n)nftVal += RARITY_VAL[n.rarity]||0});
+  document.getElementById('nft-val').textContent = nftVal;
+  document.getElementById('total-val').textContent = (WALLET.balance + nftVal).toFixed(0);
+  
+  // Scan records
+  var recordsEl = document.getElementById('scan-records');
+  if(WALLET.scanRecords.length === 0){
+    recordsEl.innerHTML = '<div class="empty-state">'+t('wl_empty')+'</div>';
+  } else {
+    recordsEl.innerHTML = WALLET.scanRecords.map(function(r){
+      return '<div class="scan-item"><div class="si-icon">📱</div><div class="si-info"><span class="si-name">'+r.item+'</span><span class="si-time">'+r.time+'</span></div><div class="si-puffs">+'+r.puffs+' PUFF</div></div>';
+    }).join('');
+  }
+  // NFT grid
+  var nftEl = document.getElementById('nft-grid-9');
+  nftEl.innerHTML = WALLET.nfts.map(function(n,i){
+    if(!n) return '<div class="nft-cell empty" data-idx="'+i+'"><span class="nft-placeholder">+</span></div>';
+    var rc = n.rarity === 'epic' ? '#ff4081' : (n.rarity === 'rare' ? '#7c4dff' : '#33eaff');
+    var rlt = n.rarity === 'epic' ? 'EPIC' : (n.rarity === 'rare' ? 'RARE' : 'COMMON');
+    return '<div class="nft-cell" style="border-color:'+rc+';box-shadow:0 0 8px '+rc+'40"><div class="nft-icon">'+n.icon+'</div><div class="nft-name">'+n.name+'</div><div class="nft-rarity" style="color:'+rc+'">'+rlt+'</div></div>';
+  }).join('');
+  document.querySelectorAll('.nft-cell.empty').forEach(function(el){
+    el.addEventListener('click', function(){
+      var i = parseInt(this.getAttribute('data-idx'));
+      if(!WALLET.connected){ connectWallet(); return; }
+      if(WALLET.balance < 50){ alert(t('wl_insufficient')); return; }
+      WALLET.balance -= 50;
+      var nft = NFT_LIST[i];
+      WALLET.nfts[i] = {name:nft.name, icon:nft.icon, rarity:nft.rarity};
+      saveWallet(); renderWallet();
+    });
+  });
+  saveWallet();
+}
+
+async function connectWallet(){
+  // 尝试 MetaMask 连接
+  if (typeof window.ethereum !== 'undefined') {
+    try {
+      var acc = await connectWallet();
+      if (acc) {
+        WALLET.connected = true;
+        WALLET.address = acc;
+        WALLET.metaMask = true;
+        // 获取链上 PUFF 余额
+        try {
+          var bal = await getPuffBalance(acc);
+          if (parseFloat(bal) > 0) WALLET.balance = parseFloat(bal);
+        } catch(e) {}
+        renderWallet();
+        return;
+      }
+    } catch(e) {}
+  }
+  // 降级：本地模拟模式
+  if(WALLET.connected && !WALLET.metaMask){
+    WALLET.connected = false; WALLET.address = '';
+  } else {
+    WALLET.connected = true;
+    WALLET.metaMask = false;
+    WALLET.address = '0x'+Array.from({length:40},function(){return '0123456789abcdef'[Math.floor(Math.random()*16)]}).join('');
+    var p = products[Math.floor(Math.random()*products.length)];
+    var pts = Math.floor(Math.random()*100)+20;
+    WALLET.scanRecords.unshift({item:p, time:new Date().toLocaleString(lang==='zh'?'zh-CN':lang==='en'?'en-US':'ko-KR'), puffs:pts});
+    WALLET.balance += pts;
+  }
+  renderWallet();
+}
+
+function genScan(){
+  if(!WALLET.connected){ connectWallet(); return; }
+  var p = products[Math.floor(Math.random()*products.length)];
+  var pts = Math.floor(Math.random()*120)+30;
+  WALLET.scanRecords.unshift({item:p, time:new Date().toLocaleString(lang==='zh'?'zh-CN':lang==='en'?'en-US':'ko-KR'), puffs:pts});
+  WALLET.balance += pts;
+  renderWallet();
+}
+
+document.getElementById('wallet-connect-btn').addEventListener('click', connectWallet);
+document.getElementById('gen-scan-btn').addEventListener('click', genScan);
+document.getElementById('mint-nft-btn').addEventListener('click', function(){
+  if(!WALLET.connected){ connectWallet(); return; }
+  var idx = WALLET.nfts.indexOf(null);
+  if(idx === -1){ alert(t('wl_full')); return; }
+  if(WALLET.balance < 50){ alert(t('wl_insufficient')); return; }
+  WALLET.balance -= 50;
+  var nft = NFT_LIST[idx];
+  WALLET.nfts[idx] = {name:nft.name, icon:nft.icon, rarity:nft.rarity};
+  renderWallet();
+});
+
+document.getElementById('hb2').addEventListener('click', function(){document.getElementById('nr').classList.toggle('mob')});
+
+function sw(l){
+  lang = l; localStorage.setItem('puff-lang', l);
+  document.getElementById('bzh').className = ''; document.getElementById('ben').className = '';
+  document.getElementById('bko').className = '';
+  document.getElementById('b'+l).className = 'ac';
+  renderWallet();
+}
+sw(lang);
+renderWallet();
+</script>
+</body>
+</html>

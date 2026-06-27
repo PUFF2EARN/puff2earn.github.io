@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>PUFF-CHAIN · 扫码验证</title>
+<meta name="description" content="扫码验证 PUFF-CHAIN 产品真伪，查看全链路溯源信息，铸造数字藏品 NFT。" />
+<link rel="stylesheet" href="style.css" />
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.11.0/dist/ethers.umd.min.js"></script>
+<script src="web3.js"></script>
+<style>
+.scan-page{min-height:100vh;padding-top:80px;padding-bottom:2rem}
+.scan-hero{text-align:center;padding:2rem 1.25rem 1rem;position:relative}
+.scan-hero .icon{font-size:3rem;margin-bottom:0.8rem;display:inline-block;padding:1rem;border:2px solid var(--cyan);border-radius:50%;width:80px;height:80px;line-height:60px;animation:ps 2s infinite}
+@keyframes ps{0%,100%{box-shadow:0 0 10px var(--cyan-dim)}50%{box-shadow:0 0 30px var(--cyan-dim)}}
+.scan-hero h1{font-family:var(--mono);font-weight:300;font-size:clamp(1.5rem,5vw,2.2rem);letter-spacing:3px;margin-bottom:0.5rem}
+.scan-hero h1 span{color:var(--cyan)}
+.scan-hero p{font-family:var(--mono);font-size:1rem;color:var(--gray);letter-spacing:1px;margin-bottom:1rem}
+.scan-container{max-width:600px;margin:0 auto;padding:0 1.25rem}
+.scan-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.75rem;margin-bottom:1rem;transition:border-color .25s}
+.scan-card:hover{border-color:var(--cyan)}
+.scan-card .label{font-family:var(--mono);font-size:0.75rem;letter-spacing:2px;color:var(--gray);text-transform:uppercase;margin-bottom:0.5rem;display:flex;align-items:center;gap:6px}
+.scan-card .label .dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);display:inline-block}
+.scan-card h3{font-family:var(--mono);font-weight:400;font-size:1.2rem;letter-spacing:1px;color:var(--white);margin-bottom:0.3rem}
+.scan-card .detail{font-family:var(--mono);font-size:0.9rem;color:var(--gray);line-height:1.8}
+.scan-card .detail .hl{color:var(--cyan)}
+.scan-card .btn-area{margin-top:1rem;display:flex;gap:8px;flex-wrap:wrap}
+.chain-badge{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:0.75rem;padding:4px 12px;background:rgba(0,230,118,0.08);border:1px solid rgba(0,230,118,0.25);color:var(--green);border-radius:2px;margin-top:0.5rem}
+.scan-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:1.5rem}
+.scan-actions .btn{font-size:0.9rem;padding:10px 24px}
+.scan-history{margin-top:2rem}
+.scan-history h3{font-family:var(--mono);font-weight:400;font-size:1.1rem;letter-spacing:1px;margin-bottom:1rem;color:var(--gray)}
+.scan-history h3 span{color:var(--cyan)}
+.history-item{display:flex;align-items:center;gap:10px;padding:0.7rem 0;border-bottom:1px solid rgba(255,255,255,0.03);font-family:var(--mono);font-size:0.85rem}
+.history-item:last-child{border:none}
+.history-item .h-icon{font-size:1rem;width:24px;text-align:center}
+.history-item .h-info{flex:1}
+.history-item .h-name{color:var(--white)}
+.history-item .h-time{color:var(--gray);font-size:0.7rem}
+.history-item .h-badge{font-family:var(--mono);font-size:0.7rem;padding:3px 10px;border-radius:2px}
+.history-item .h-badge.first{background:rgba(51,234,255,0.10);color:var(--cyan);border:1px solid rgba(51,234,255,0.2)}
+.history-item .h-badge.mint{background:rgba(124,77,255,0.12);color:var(--purple);border:1px solid rgba(124,77,255,0.25)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+    <span>//</span> PUFF<span>-CHAIN</span>
+  </div>
+  <div class="nr">
+    <ul>
+      <li><a href="index.html">首页</a></li>
+      <li><a href="store.html">商店</a></li>
+      <li><a href="wallet.html">钱包</a></li>
+      <li><a href="register.html">注册</a></li>
+      <li><a href="scan.html" style="color:var(--cyan)">扫码</a></li>
+    </ul>
+    <div class="ls"><button onclick="sw('zh')" id="lang-zh">中文</button><button onclick="sw('en')" id="lang-en">EN</button><button onclick="sw('ko')" id="lang-ko">한국어</button></div>
+  </div>
+</nav>
+
+<div class="scan-page">
+  <div class="scan-hero">
+    <div class="icon">📱</div>
+    <h1 id="scan-title">PUFF-CHAIN <span>扫码验证</span></h1>
+    <p id="scan-subtitle">扫描产品二维码 · 验证真伪 · 挖掘数字价值</p>
+  </div>
+
+  <div class="scan-container">
+    <!-- QR Input -->
+    <div class="scan-card">
+      <div class="label"><span class="dot"></span> <span id="lbl-scan-input">扫码输入</span></div>
+      <div style="display:flex;gap:8px">
+        <input type="text" id="qr-input" placeholder="点击下方按钮模拟扫码，或输入二维码 ID" style="flex:1;padding:0.8rem 1rem;background:var(--surface2);border:1px solid var(--border);border-radius:3px;color:var(--white);font-family:var(--mono);font-size:1rem;outline:none">
+        <button class="btn bp" onclick="simulateScan()" style="font-size:0.85rem;padding:10px 24px" id="btn-scan">📷 扫码</button>
+      </div>
+    </div>
+
+    <!-- Product Info (hidden initially) -->
+    <div id="product-result" style="display:none">
+      <div class="scan-card">
+        <div class="label"><span class="dot"></span> <span id="lbl-product">产品信息</span></div>
+        <h3 id="scan-prod-name">ELFBAR BC5000</h3>
+        <div class="detail" id="scan-prod-detail"></div>
+        <div class="chain-badge">🔗 已上链 · Ethereum Sepolia</div>
+      </div>
+
+      <div class="scan-card">
+        <div class="label"><span class="dot"></span> <span id="lbl-trace">溯源信息</span></div>
+        <div class="detail" id="scan-trace-detail"></div>
+      </div>
+
+      <div class="scan-card">
+        <div class="label"><span class="dot"></span> <span id="lbl-actions">操作</span></div>
+        <div class="scan-actions">
+          <button class="btn bp" onclick="mintNft()" id="btn-mint">✨ 铸造 NFT</button>
+          <button class="btn bo" onclick="goStore()" id="btn-buy">🛒 选购产品</button>
+          <button class="btn bo" onclick="goRegister()" id="btn-reg">👤 注册账号</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Promotional (shown before scan) -->
+    <div id="scan-promo">
+      <div class="scan-card" style="text-align:center;border-style:dashed">
+        <div style="font-size:2.5rem;margin-bottom:0.5rem">🔍</div>
+        <p style="font-family:var(--mono);font-size:0.7rem;color:var(--gray);letter-spacing:1px" id="lbl-promo">扫码即可验证产品真伪、查看溯源信息并铸造专属 NFT</p>
+      </div>
+    </div>
+
+    <!-- Recent Scans -->
+    <div class="scan-history" id="scan-history-section">
+      <h3><span>◈</span> <span id="lbl-recent">最近扫码</span></h3>
+      <div id="scan-history-list">
+        <div class="history-item"><div class="h-icon">📱</div><div class="h-info"><span class="h-name">暂无扫码记录</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// QR Scan Data Store
+// ============================================================
+const SCAN_HISTORY_KEY = 'puff-scan-history';
+
+function getHistory(){
+  try{return JSON.parse(localStorage.getItem(SCAN_HISTORY_KEY))||[]}catch{return []}
+}
+function addHistory(entry){
+  const h = getHistory();
+  h.unshift({...entry, time:Date.now()});
+  if(h.length>20) h.length = 20;
+  localStorage.setItem(SCAN_HISTORY_KEY, JSON.stringify(h));
+  renderHistory();
+}
+
+// ============================================================
+// Product Database (same as store)
+// ============================================================
+const PRODUCTS = [
+  {id:'ELFBAR-BC5', name:'ELFBAR BC5000', brand:'ELFBAR', cat:'一次性', price:158, puffs:30, desc:'5000口一次性电子烟，多口味可选'},
+  {id:'SMOK-N5', name:'SMOK Novo 5', brand:'SMOK', cat:'一次性', price:129, puffs:25, desc:'SMOK 最新一次性产品'},
+  {id:'VPR-X3', name:'VAPORESSO XROS 3', brand:'VAPORESSO', cat:'一次性', price:139, puffs:28, desc:'高性能一次性电子烟'},
+  {id:'UWELL-A3', name:'UWELL Caliburn A3', brand:'UWELL', cat:'一次性', price:89, puffs:18, desc:'经典小烟体验'},
+  {id:'GK-WQ', name:'GeekVape Wenax Q', brand:'GeekVape', cat:'换弹', price:79, puffs:16, desc:'入门级换弹套装'},
+  {id:'VP-AG', name:'Voopoo Argus G', brand:'VOOPOO', cat:'换弹', price:99, puffs:20, desc:'Argus 系列换弹套装'},
+  {id:'IN-JEM', name:'Innokin Jem', brand:'Innokin', cat:'换弹', price:89, puffs:18, desc:'轻巧换弹系统'},
+  {id:'LV-UN', name:'Lost Vape Ursa Nano', brand:'Lost Vape', cat:'换弹', price:129, puffs:26, desc:'Ursa 迷你换弹套装'},
+  {id:'VPR-GPT60', name:'Vaporesso Gen PT60', brand:'VAPORESSO', cat:'注油', price:199, puffs:40, desc:'Gen PT60 注油套装'},
+  {id:'SMOK-N5O', name:'Smok Nord 5', brand:'SMOK', cat:'注油', price:149, puffs:30, desc:'Nord 5 注油设备'},
+  {id:'FM-MAX', name:'Freemax Maxus', brand:'Freemax', cat:'注油', price:179, puffs:36, desc:'Maxus 旗舰注油套装'},
+  {id:'VP-DX', name:'Voopoo Drag X', brand:'VOOPOO', cat:'注油', price:169, puffs:34, desc:'Drag X 注油版'},
+  {id:'NK-100', name:'Naked 100', brand:'Naked 100', cat:'烟油', price:89, puffs:15, desc:'Naked 100 烟油 30ml'},
+  {id:'DL-LADY', name:'Dinner Lady', brand:'Dinner Lady', cat:'烟油', price:79, puffs:13, desc:'Dinner Lady 经典烟油'},
+  {id:'PCH-X1', name:'Puff Chain X1', brand:'PUFF-CHAIN', cat:'烟油', price:69, puffs:20, desc:'PUFF-CHAIN 联名烟油'},
+  {id:'JH-HEAD', name:'Juice Head', brand:'Juice Head', cat:'烟油', price:85, puffs:14, desc:'Juice Head 冰爽烟油'}
+];
+
+function findProduct(skuOrName){
+  const q = skuOrName.trim().toLowerCase();
+  return PRODUCTS.find(p=>p.id.toLowerCase()===q||p.name.toLowerCase().includes(q));
+}
+
+// ============================================================
+// Simulate Scan
+// ============================================================
+function simulateScan(){
+  const input = document.getElementById('qr-input');
+  const val = input.value.trim();
+  // If empty, pick a random product
+  const prod = val ? findProduct(val) : PRODUCTS[Math.floor(Math.random()*PRODUCTS.length)];
+
+  if(prod){
+    showProduct(prod);
+    addHistory({type:'scan', product:prod.name, sku:prod.id});
+  } else {
+    alert('未找到产品，请尝试输入产品名称或 SKU（如 ELFBAR-BC5）');
+  }
+  if(!val){
+    // Simulate a QR scan effect by filling input
+    input.value = prod ? prod.id : '';
+  }
+}
+
+function showProduct(prod){
+  document.getElementById('scan-promo').style.display = 'none';
+  document.getElementById('product-result').style.display = 'block';
+
+  document.getElementById('scan-prod-name').textContent = prod.name;
+
+  const traceHtml = `<div><span class="hl">批次:</span> #BATCH-${String(prod.id).toUpperCase()}-${Math.floor(1000+Math.random()*9000)}</div>
+<div><span class="hl">品牌:</span> ${prod.brand}</div>
+<div><span class="hl">分类:</span> ${prod.cat}</div>
+<div><span class="hl">出厂日期:</span> 2026-${String(1+Math.floor(Math.random()*6)).padStart(2,'0')}-${String(1+Math.floor(Math.random()*28)).padStart(2,'0')}</div>
+<div><span class="hl">扫码次数:</span> ${1+Math.floor(Math.random()*50)}</div>
+<div style="margin-top:6px"><span class="hl">溯源ID:</span> <span style="color:var(--gray);font-size:0.6rem">0x${Array.from({length:64},()=>'0123456789abcdef'[Math.floor(Math.random()*16)]).join('')}</span></div>`;
+
+  document.getElementById('scan-trace-detail').innerHTML = traceHtml;
+
+  const detailHtml = `<div><span class="hl">价格:</span> ¥${prod.price}</div>
+<div><span class="hl">PUFF 奖励:</span> <span style="color:var(--pink)">+${prod.puffs}</span></div>
+<div><span class="hl">描述:</span> ${prod.desc}</div>`;
+  document.getElementById('scan-prod-detail').innerHTML = detailHtml;
+
+  // Smooth scroll to result
+  document.getElementById('product-result').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// ============================================================
+// Actions
+// ============================================================
+async function mintNft(){
+  addHistory({type:'mint', product:document.getElementById('scan-prod-name').textContent, sku:''});
+  
+  // 尝试 MetaMask 链上铸造
+  if (typeof window.ethereum !== 'undefined') {
+    try {
+      var acc = await connectWallet();
+      if (acc) {
+        var prodName = document.getElementById('scan-prod-name').textContent;
+        var batchNo = '#BATCH-' + Math.random().toString(36).slice(2,8).toUpperCase();
+        var traceData = JSON.stringify({
+          scanTime: new Date().toISOString(),
+          scanner: acc,
+          source: 'puff2earn.com'
+        });
+        var result = await mintNFT(acc, prodName, batchNo, traceData, '');
+        if (result) {
+          alert('✅ NFT 铸造成功！\nToken ID: ' + result.tokenId + '\n交易哈希: ' + result.tx.slice(0, 10) + '...');
+          return;
+        } else {
+          alert('⚠️ 链上铸造失败，将使用本地模式。');
+        }
+      }
+    } catch(e) {
+      console.error('Web3 mint error:', e);
+    }
+  }
+  
+  // 降级：本地铸造模式
+  const session = localStorage.getItem('puff-session');
+  if(session){
+    // 给本地用户增加一个模拟 NFT
+    try {
+      var wallet = JSON.parse(localStorage.getItem('puff-wallet') || '{}');
+      if (wallet.nfts) {
+        var emptyIdx = wallet.nfts.indexOf(null);
+        if (emptyIdx >= 0) {
+          var nftMeta = [
+            {name:'Genesis Cloud',icon:'☁️',rarity:'rare'},
+            {name:'Cyber Wave',icon:'🌊',rarity:'common'},
+            {name:'Neon Drop',icon:'💧',rarity:'epic'},
+            {name:'PUFF-X1',icon:'🔷',rarity:'common'},
+            {name:'Vape Aura',icon:'✨',rarity:'rare'},
+            {name:'Block Vapor',icon:'🧊',rarity:'common'},
+            {name:'Vapor Ghost',icon:'👻',rarity:'epic'},
+            {name:'Pixel Puff',icon:'🎮',rarity:'rare'},
+            {name:'Chain Link',icon:'🔗',rarity:'common'}
+          ];
+          wallet.nfts[emptyIdx] = nftMeta[emptyIdx];
+          localStorage.setItem('puff-wallet', JSON.stringify(wallet));
+        }
+      }
+    } catch(e) {}
+    alert('✨ NFT 铸造成功！已存入你的钱包。');
+  } else {
+    if(confirm('铸造需要先注册/登录。是否前往注册？')){
+      window.location.href = 'register.html?qr=1';
+    }
+  }
+}
+
+function goRegister(){
+  window.location.href = 'register.html?qr=1';
+}
+
+function goStore(){
+  window.location.href = 'store.html';
+}
+
+// ============================================================
+// History
+// ============================================================
+function renderHistory(){
+  const h = getHistory();
+  const list = document.getElementById('scan-history-list');
+  if(h.length===0){
+    list.innerHTML = '<div class="history-item"><div class="h-icon">📱</div><div class="h-info"><span class="h-name">暂无扫码记录</span></div></div>';
+    return;
+  }
+  list.innerHTML = h.slice(0,8).map(e=>{
+    const d = new Date(e.time);
+    const timeStr = d.toLocaleDateString('zh-CN')+' '+d.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'});
+    const type = e.type==='mint'?'mint':'first';
+    const label = e.type==='mint'?'铸造':'首次';
+    return `<div class="history-item">
+      <div class="h-icon">${e.type==='mint'?'✨':'📱'}</div>
+      <div class="h-info"><span class="h-name">${e.product}</span><div class="h-time">${timeStr}</div></div>
+      <span class="h-badge ${type}">${label}</span>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// Auto-scan from URL parameter
+// ============================================================
+(function(){
+  const url = new URL(window.location.href);
+  const sku = url.searchParams.get('sku') || url.searchParams.get('p') || url.searchParams.get('qr');
+  if(sku){
+    document.getElementById('qr-input').value = sku;
+    simulateScan();
+  }
+})();
+
+// ============================================================
+// i18n
+// ============================================================
+const LANG_DATA = {
+  zh: {
+    title:'PUFF-CHAIN 扫码验证',
+    subtitle:'扫描产品二维码 · 验证真伪 · 挖掘数字价值',
+    lbl_input:'扫码输入',
+    btn_scan:'📷 扫码',
+    lbl_product:'产品信息',
+    lbl_trace:'溯源信息',
+    lbl_actions:'操作',
+    btn_mint:'✨ 铸造 NFT',
+    btn_buy:'🛒 选购产品',
+    btn_reg:'👤 注册账号',
+    lbl_promo:'扫码即可验证产品真伪、查看溯源信息并铸造专属 NFT',
+    lbl_recent:'最近扫码',
+    empty:'暂无扫码记录'
+  },
+  en: {
+    title:'PUFF-CHAIN Scan Verification',
+    subtitle:'Scan product QR · Verify Authenticity · Unlock Digital Value',
+    lbl_input:'Scan Input',
+    btn_scan:'📷 Scan',
+    lbl_product:'Product Info',
+    lbl_trace:'Trace Info',
+    lbl_actions:'Actions',
+    btn_mint:'✨ Mint NFT',
+    btn_buy:'🛒 Shop Now',
+    btn_reg:'👤 Register',
+    lbl_promo:'Scan to verify authenticity, view traceability, and mint your exclusive NFT',
+    lbl_recent:'Recent Scans',
+    empty:'No scan records'
+  },
+  ko: {
+    title:'PUFF-CHAIN QR 인증',
+    subtitle:'제품 QR 스캔 · 진위 확인 · 디지털 가치 발굴',
+    lbl_input:'스캔 입력',
+    btn_scan:'📷 스캔',
+    lbl_product:'제품 정보',
+    lbl_trace:'추적 정보',
+    lbl_actions:'작업',
+    btn_mint:'✨ NFT 발행',
+    btn_buy:'🛒 쇼핑하기',
+    btn_reg:'👤 회원가입',
+    lbl_promo:'스캔하여 제품 진위 확인, 추적 정보 확인 및 NFT 발행',
+    lbl_recent:'최근 스캔',
+    empty:'스캔 기록 없음'
+  }
+};
+
+function sw(lang){
+  localStorage.setItem('puff-lang', lang);
+  document.documentElement.lang = lang==='zh'?'zh-CN':lang;
+  applyLang(lang);
+  document.querySelectorAll('.ls button').forEach(b=>b.classList.toggle('ac', b.id==='lang-'+lang));
+}
+
+function applyLang(lang){
+  const d = LANG_DATA[lang];
+  if(!d) return;
+  document.getElementById('scan-title').innerHTML = 'PUFF-CHAIN <span>'+d.title.replace(/^PUFF-CHAIN /,'')+'</span>';
+  document.getElementById('scan-subtitle').textContent = d.subtitle;
+  document.getElementById('lbl-scan-input').textContent = d.lbl_input;
+  document.getElementById('btn-scan').textContent = d.btn_scan;
+  document.getElementById('lbl-product').textContent = d.lbl_product;
+  document.getElementById('lbl-trace').textContent = d.lbl_trace;
+  document.getElementById('lbl-actions').textContent = d.lbl_actions;
+  document.getElementById('btn-mint').textContent = d.btn_mint;
+  document.getElementById('btn-buy').textContent = d.btn_buy;
+  document.getElementById('btn-reg').textContent = d.btn_reg;
+  document.getElementById('lbl-promo').textContent = d.lbl_promo;
+  document.getElementById('lbl-recent').textContent = d.lbl_recent;
+}
+
+function initLang(){
+  const lang = localStorage.getItem('puff-lang')||'zh';
+  sw(lang);
+}
+initLang();
+
+// Init history
+renderHistory();
+</script>
+</body>
+</html>
