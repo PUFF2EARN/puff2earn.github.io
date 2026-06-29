@@ -4,8 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <title>PUFF-CHAIN 路 鍟嗗簵</title>
-<meta name="description" content="閫夎喘 PUFF-CHAIN 骞冲彴鐢靛瓙鐑熶骇鍝侊紝鏀寔璐墿杞︾粨绠楋紝涓嬪崟鍗冲緱 PUFF 浠ｅ竵濂栧姳銆? />
-<link rel="stylesheet" href="style.css" />
+<meta name="description" content="选购 PUFF-CHAIN 平台电子烟产品，支持购物车结算，下单即得 PUFF 代币奖励。"stylesheet" href="style.css" />
 <style>
 .cart-wrap{position:fixed;top:80px;right:1rem;z-index:100}
 .cart-btn{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:0.6rem 1rem;cursor:pointer;font-family:var(--mono);font-size:0.85rem;color:var(--cyan);display:flex;align-items:center;gap:8px;transition:border-color .25s}
@@ -74,7 +73,7 @@
       <li><a href="index.html#roadmap">璺嚎</a></li>
       <li><a href="register.html">娉ㄥ唽</a></li>
       <li><a href="wallet.html">閽卞寘</a></li>
-      <li><a href="scan.html">鎵爜</a></li>
+      <li><a href="scan.html">扫码</a></li>
     </ul>
     <div class="ls">
       <button onclick="sw('zh')" id="bzh">涓?/button>
@@ -84,7 +83,7 @@
         <span id="nav-user-name" style="color:var(--cyan)"></span>
         <a href="wallet.html" style="color:var(--gray)">閽卞寘</a>
         <a href="admin/" style="color:var(--gray)">绠＄悊</a>
-        <button onclick="doLogout()" style="background:transparent;border:1px solid var(--border);color:var(--pink);padding:2px 8px;cursor:pointer;font-family:var(--mono);font-size:0.55rem;letter-spacing:1px;border-radius:2px">閫€鍑?/button>
+        <button onclick="doLogout()" style="background:transparent;border:1px solid var(--border);color:var(--pink);padding:2px 8px;cursor:pointer;font-family:var(--mono);font-size:0.55rem;letter-spacing:1px;border-radius:2px">退出</button>
       </span>
     </div>
   </div>
@@ -97,10 +96,10 @@
 <div class="cart-panel" id="cart-panel">
   <h3 id="cart-title">馃洅 璐墿杞?/h3>
   <div id="cart-items"></div>
-  <div class="cart-total"><span data-i="st_total">鍚堣</span><span id="cart-total-price">楼0</span></div>
+  <div class="cart-total"><span data-i="st_total">合计</span><span id="cart-total-price">楼0</span></div>
   <div class="cart-actions">
     <button class="btn bo" onclick="clearCart()" data-i="st_clear">娓呯┖</button>
-    <button class="btn bp" onclick="openCheckout()" id="btn-checkout" data-i="st_checkout">鍘荤粨绠?/button>
+    <button class="btn bp" onclick="openCheckout()" id="btn-checkout" data-i="st_checkout">去结算</button>
   </div>
 </div>
 
@@ -110,19 +109,19 @@
       <h2><span>鈼?/span> <span data-i="st_checkout">纭璁㈠崟</span></h2>
       <div class="ck-summary" id="ck-summary"></div>
       <div class="ck-form">
-        <div class="fg"><label data-i="st_name">鏀惰揣浜?/label><input type="text" id="ck-name" placeholder="寮犱笁"></div>
-        <div class="fg"><label data-i="st_phone">鎵嬫満鍙?/label><input type="text" id="ck-phone" placeholder="13800138000"></div>
-        <div class="fg"><label data-i="st_address">鏀惰揣鍦板潃</label><input type="text" id="ck-addr" placeholder="XX鐪乆X甯俋X鍖篨X璺疿X鍙?></div>
+        <div class="fg"><label data-i="st_name">收货人</label><input type="text" id="ck-name" placeholder="寮犱笁"></div>
+        <div class="fg"><label data-i="st_phone">手机号</label><input type="text" id="ck-phone" placeholder="13800138000"></div>
+        <div class="fg"><label data-i="st_address">收货地址</label><input type="text" id="ck-addr" placeholder="XX省XX市XX区XX路X号></div>
       </div>
       <div class="ck-actions">
-        <button class="btn bo" onclick="closeCheckout()" data-i="st_cancel">鍙栨秷</button>
+        <button class="btn bo" onclick="closeCheckout()" data-i="st_cancel">取消</button>
         <button class="btn bp" onclick="placeOrder()" id="btn-place-order" data-i="st_confirm">纭涓嬪崟</button>
       </div>
     </div>
     <div id="checkout-success" style="display:none">
       <div class="ck-success">
         <div class="icon">鉁?/div>
-        <h3><span data-i="st_order_placed">涓嬪崟鎴愬姛锛?/span></h3>
+        <h3><span data-i="st_order_placed">下单成功！</span></h3>
         <p id="ck-order-number"></p>
         <p id="ck-puff-earned"></p>
         <button class="btn bp" onclick="closeCheckout();renderCart()" style="margin-top:1rem">馃憤 OK</button>
@@ -136,14 +135,14 @@
   <h2 class="st"><span data-i="st_t">浜у搧</span> <span style="color:var(--cyan)">鍟嗗簵</span></h2>
 
   <div class="scat">
-    <button class="scat-btn ac" data-i="st_all" data-cat="all">鍏ㄩ儴</button>
+    <button class="scat-btn ac" data-i="st_all" data-cat="all">全部</button>
     <button class="scat-btn" data-i="st_cat1" data-cat="disposable">涓€娆℃€?/button>
-    <button class="scat-btn" data-i="st_cat2" data-cat="pod">鎹㈠脊</button>
+    <button class="scat-btn" data-i="st_cat2" data-cat="pod">换弹</button>
     <button class="scat-btn" data-i="st_cat3" data-cat="refillable">娉ㄦ补</button>
-    <button class="scat-btn" data-i="st_cat4" data-cat="oil">鐑熸补</button>
+    <button class="scat-btn" data-i="st_cat4" data-cat="oil">烟油</button>
   </div>
 
-  <h4 class="brand-title" data-i="st_brands">鍝佺墝鍒楄〃</h4>
+  <h4 class="brand-title" data-i="st_brands">品牌列表</h4>
   <div class="brand-grid" id="brand-grid"></div>
 
   <div class="sg" id="store-grid"></div>
@@ -245,12 +244,12 @@ function openCheckout(){
   if(session){try{var users=JSON.parse(localStorage.getItem('puff-users')||'{}');var sessions=JSON.parse(localStorage.getItem('puff-sessions')||'{}');var uid=Object.keys(sessions).find(function(k){return sessions[k]===session});if(uid&&users[uid])u=users[uid]}catch(){}}
   if(!u){
     var ov=document.getElementById('checkout-overlay');
-    document.getElementById('checkout-body').innerHTML='<div style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:1rem">馃敀</div><h3 style="font-family:var(--mono);font-weight:300;margin-bottom:0.5rem" data-i="st_login_first">璇峰厛鐧诲綍鍚庡啀璐拱</h3><div class="ck-actions"><button class="btn bo" onclick="closeCheckout()" data-i="st_cancel">鍙栨秷</button><a href="register.html" class="btn bp" style="text-decoration:none">鐧诲綍</a></div></div>';
+    document.getElementById('checkout-body').innerHTML='<div style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:1rem">馃敀</div><h3 style="font-family:var(--mono);font-weight:300;margin-bottom:0.5rem" data-i="st_login_first">请先登录后再购买</h3><div class="ck-actions"><button class="btn bo" onclick="closeCheckout()" data-i="st_cancel">取消</button><a href="register.html" class="btn bp" style="text-decoration:none">登录</a></div></div>';
     ov.classList.add('show');return
   }
   var total=c.reduce(function(s,x){var p=PRODUCTS.find(pr=>pr.id===x.id);return s+(p?p.price*x.qty:0)},0);
   var puff=c.reduce(function(s,x){var p=PRODUCTS.find(pr=>pr.id===x.id);return s+(p?p.puff*x.qty:0)},0);
-  document.getElementById('ck-summary').innerHTML=c.map(function(x){var p=PRODUCTS.find(pr=>pr.id===x.id);return p?'<div class="ck-row"><span>'+p.name+' x'+x.qty+'</span><span>楼'+(p.price*x.qty)+'</span></div>':''}).join('')+'<div class="ck-row total"><span data-i="st_total">鍚堣</span><span>楼'+total+'</span></div><div class="ck-row"><span>PUFF 濂栧姳</span><span style="color:var(--pink)">+'+puff+' PUFF</span></div>';
+  document.getElementById('ck-summary').innerHTML=c.map(function(x){var p=PRODUCTS.find(pr=>pr.id===x.id);return p?'<div class="ck-row"><span>'+p.name+' x'+x.qty+'</span><span>楼'+(p.price*x.qty)+'</span></div>':''}).join('')+'<div class="ck-row total"><span data-i="st_total">合计</span><span>楼'+total+'</span></div><div class="ck-row"><span>PUFF 濂栧姳</span><span style="color:var(--pink)">+'+puff+' PUFF</span></div>';
   document.getElementById('checkout-success').style.display='none';
   document.getElementById('checkout-body').querySelector('.ck-form').style.display='block';
   document.querySelectorAll('#ck-name,#ck-phone,#ck-addr').forEach(function(el){el.value=''});
@@ -262,16 +261,16 @@ function placeOrder(){
   var total=c.reduce(function(s,x){var p=PRODUCTS.find(pr=>pr.id===x.id);return s+(p?p.price*x.qty:0)},0);
   var puffTotal=c.reduce(function(s,x){var p=PRODUCTS.find(pr=>pr.id===x.id);return s+(p?p.puff*x.qty:0)},0);
   var name=document.getElementById('ck-name').value.trim(),phone=document.getElementById('ck-phone').value.trim(),addr=document.getElementById('ck-addr').value.trim();
-  if(!name||!phone||!addr){showNotif('璇峰～鍐欏畬鏁翠俊鎭?);return}
+  if(!name||!phone||!addr){showNotif('请填写完整信息');return}
   var d=JSON.parse(localStorage.getItem('puff-admin-data')||'null');
   if(!d){d={products:[],orders:[],users:[],nfts:[],partners:[],nextId:{product:17,order:1,user:4,nft:110,partner:5}}}
   var session=localStorage.getItem('puff-session');
-  if(!session){showNotif('璇峰厛鐧诲綍');return}
+  if(!session){showNotif('请先登录');return}
   var sessions=JSON.parse(localStorage.getItem('puff-sessions')||'{}');
   var uid=Object.keys(sessions).find(function(k){return sessions[k]===session});
   var users=JSON.parse(localStorage.getItem('puff-users')||'{}');
   var user=users[uid];
-  if(!user){showNotif('鐢ㄦ埛涓嶅瓨鍦?);return}
+  if(!user){showNotif('用户不存在');return}
   var oid=Date.now().toString(36);
   var order={id:oid,userId:uid,items:c.map(function(x){var p=PRODUCTS.find(pr=>pr.id===x.id);return{productId:x.id,productName:p?p.name:'',qty:x.qty}}),amount:total,puffReward:puffTotal,status:'pending',createdAt:new Date().toISOString(),shipping:{name:name,phone:phone,address:addr}};
   d.orders.push(order);

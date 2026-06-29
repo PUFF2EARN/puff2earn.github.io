@@ -3,206 +3,349 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-<title>PUFF-CHAIN 路 Web3.0 电子雾化数字生态平台</title>
-<meta name="description" content="PUFF-CHAIN 鍩轰簬浠ュお鍧婄殑 Web3.0 鐢靛瓙闆惧寲鏁板瓧鐢熸€佸钩鍙?鈥?鑷富閽卞寘 路 NFT 鏁板瓧钘忓搧 路 PUFF 浠ｅ竵 路 浜岀淮鐮佷骇鍝佹函婧?路 浜у搧鍟嗗簵 路 鍚堜紮浜虹綉缁? />
-<meta property="og:title" content="PUFF-CHAIN 路 Web3.0 Vape Digital Platform" />
-<meta property="og:description" content="鍩轰簬浠ュお鍧婄殑鐢靛瓙闆惧寲鏁板瓧鐢熸€佸钩鍙般€傞€氳繃鍖哄潡閾炬妧鏈噸鏋勭數瀛愮儫琛屼笟鐨勬秷璐逛綋楠屼笌浠峰€煎垎閰嶃€? />
+<title>PUFF-CHAIN · Web3.0 电子雾化数字生态平台</title>
+<meta name="description" content="PUFF-CHAIN 基于以太坊的 Web3.0 电子雾化数字生态平台 — 自主钱包 · NFT 数字藏品 · PUFF 代币 · 二维码产品溯源 · 产品商店 · 合作伙伴网络" />
+<meta property="og:title" content="PUFF-CHAIN · Web3.0 Vape Digital Platform" />
+<meta property="og:description" content="基于以太坊的电子雾化数字生态平台。通过区块链技术重构电子烟行业的消费体验与价值分配。" />
 <meta property="og:url" content="https://puff2earn.com" />
-<meta name="keywords" content="鐢靛瓙鐑?Web3.0,鍖哄潡閾?NFT,浠ュお鍧?闆惧寲鍣?鐢靛瓙闆惧寲,鎵爜杩芥函" />
+<meta property="og:type" content="website" />
+<meta name="keywords" content="电子烟,Web3.0,区块链,NFT,以太坊,雾化器,电子雾化,扫码追溯" />
 <link rel="stylesheet" href="style.css" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='10' fill='%2300fff9'/></svg>" />
 </head>
 <body>
 
-<script id="i18n-json" type="application/json">{"zh":{"nav_h":"首页","nav_r":"路线","nav_n":"藏品","nav_t":"追溯","nav_s":"商店","nav_e":"生态","nav_p":"协议","ac_t":"接入 PUFF-CHAIN","ac_s":"扫码验证产品真伪 - 铸造链上数字凭证","ac_q1":"扫码验证","ac_q2":"注册账号","ac_q3":"扫码登录","ft":"· Web3.0 数字雾化生态","ft_wp":"白皮书","ft_yr":"© 2026 PUFF-CHAIN · Built on Ethereum","wl_l":"// 钱包","wl_t":"平台钱包"},"en":{"nav_h":"Home","nav_r":"Route","nav_n":"NFT","nav_t":"Trace","nav_s":"Shop","nav_e":"Eco","nav_p":"Protocol","ac_t":"Enter PUFF-CHAIN","ac_s":"Scan to verify products · Mint on-chain NFT","ac_q1":"Scan Verify","ac_q2":"Register","ac_q3":"QR Login","ft":"· Web3.0 Vape Digital Ecosystem","ft_wp":"Whitepaper","ft_yr":"© 2026 PUFF-CHAIN · Built on Ethereum","wl_l":"// Wallet","wl_t":"Platform Wallet"},"ko":{"nav_h":"홈","nav_r":"루트","nav_n":"NFT","nav_t":"추적","nav_s":"쇼핑","nav_e":"생태","nav_p":"프로토콜","ac_t":"PUFF-CHAIN 입장","ac_s":"스캔하여 제품 확인 · NFT 민팅","ac_q1":"스캔","ac_q2":"가입","ac_q3":"QR 로그인","ft":"· Web3.0 디지털 베이프 생태계","ft_wp":"백서","ft_yr":"© 2026 PUFF-CHAIN · Built on Ethereum","wl_l":"// 지갑","wl_t":"플랫폼 지갑"}</script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
-<nav>
-  <div class="logo">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-    <span>//</span> PUFF<span>-CHAIN</span>
+<nav id="nav-bar">
+  <div class="nav-logo">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+    </svg>
+    <span style="font-family:var(--mono);color:var(--cyan);letter-spacing:3px;font-size:1.1rem">
+      <span style="color:var(--muted)">//</span> PUFF<span style="color:var(--muted);font-weight:300">-CHAIN</span>
+    </span>
   </div>
-  <div class="nr" id="nr">
-    <ul id="nu">
-      <li><a href="#home" data-i="nav_h">棣栭〉</a></li>
-      <li><a href="#roadmap" data-i="nav_r">璺嚎</a></li>
-      <li><a href="#nft" data-i="nav_n">钘忓搧</a></li>
-      <li><a href="#trace" data-i="nav_t">杩芥函</a></li>
-      <li><a href="store.html" data-i="nav_s">鍟嗗簵</a></li>
-      <li><a href="#eco" data-i="nav_e">鐢熸€?/a></li>
-      <li><a href="#partner" data-i="nav_p">鍚堜紮</a></li>
-      <li><a href="#vision" data-i="nav_v">鎰挎櫙</a></li>
-      <li><a href="#access" data-i="nav_l">鎺ュ叆</a></li>
-      <li><a href="wallet.html" data-i="nav_w">閽卞寘</a></li>
-      <li><a href="register.html" data-i="nav_register" style="color:var(--pink)">娉ㄥ唽</a></li>
-    </ul>
-    <div class="ls">
-      <button onclick="sw('zh')" id="bzh">涓?/button>
-      <button onclick="sw('en')" id="ben">EN</button>
-      <button onclick="sw('ko')" id="bko">頃?/button>
-    </div>
+  <ul class="nav-list" id="nav-list">
+    <li><a href="#home">首页</a></li>
+    <li><a href="#roadmap">路线</a></li>
+    <li><a href="#nft">藏品</a></li>
+    <li><a href="#trace">追溯</a></li>
+    <li><a href="store.html">商店</a></li>
+    <li><a href="#eco">生态</a></li>
+    <li><a href="#partner">合作</a></li>
+    <li><a href="#access">接入</a></li>
+    <li><a href="wallet.html" style="color:var(--cyan)">钱包</a></li>
+    <li><a href="register.html" style="color:var(--magenta)">注册</a></li>
+  </ul>
+  <div class="nav-lang">
+    <button onclick="setLang('zh')" id="lzh" class="active">中</button>
+    <button onclick="setLang('en')" id="len">EN</button>
+    <button onclick="setLang('ko')" id="lko">한</button>
   </div>
-  <button class="hb" id="hb2"><span></span><span></span><span></span></button>
+  <button class="nav-burger" id="nav-burger" onclick="toggleNav()">☰</button>
 </nav>
 
-<section class="hero" id="home">
-  <div class="hg"></div>
-  <div class="hc">
-    <div class="hb2"><span class="d"></span> <span data-i="hero_b">Web3.0 路 Pre-Alpha</span></div>
-    <h1><span class="gl" data-text="PUFF-CHAIN">PUFF-CHAIN</span></h1>
-    <p data-i="hero_sub">鍩轰簬浠ュお鍧婄殑鐢靛瓙闆惧寲鏁板瓧骞冲彴 鈥?鑷富閽卞寘 路 NFT 路 浠ｅ竵 路 浜岀淮鐮佽拷婧?路 浜у搧鍟嗗簵 路 鍚堜紮浜虹綉缁?/p>
-    <div class="ha">
-      <a href="store.html" class="btn bp" data-i="hero_sh">閫夎喘浜у搧 鈻?/a>
-      <a href="#vision" class="btn bo" data-i="hero_v">鍟嗕笟鎰挎櫙</a>
-      <a href="#partner" class="btn bo" data-i="hero_pa">鎴愪负鍚堜紮浜?/a>
+<style>
+nav#nav-bar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:62px;background:rgba(3,4,11,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);box-shadow:0 1px 0 rgba(0,255,249,.08)}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-list{display:flex;gap:1.4rem;list-style:none;font-family:var(--mono);font-size:.78rem;letter-spacing:1px;text-transform:uppercase}
+.nav-list a{color:var(--muted);transition:.2s;position:relative;padding-bottom:2px}
+.nav-list a::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--cyan);transform:scaleX(0);transition:.2s;box-shadow:var(--glow-cyan)}
+.nav-list a:hover,.nav-list a.active{color:var(--cyan)}
+.nav-list a:hover::after,.nav-list a.active::after{transform:scaleX(1)}
+.nav-lang{display:flex;gap:4px;font-family:var(--mono);font-size:.7rem}
+.nav-lang button{background:transparent;border:1px solid var(--border);color:var(--muted);padding:4px 10px;cursor:pointer;letter-spacing:1px;transition:.2s;border-radius:2px}
+.nav-lang button:hover{border-color:var(--cyan);color:var(--cyan)}
+.nav-lang button.active{background:var(--cyan);color:var(--bg);border-color:var(--cyan)}
+.nav-burger{display:none;background:none;border:1px solid var(--border);color:var(--cyan);font-size:1.2rem;padding:4px 10px;cursor:pointer;border-radius:4px}
+@media(max-width:900px){.nav-list{display:none;position:fixed;top:62px;left:0;right:0;flex-direction:column;background:rgba(3,4,11,.97);border-bottom:1px solid var(--border);padding:1rem 2rem;gap:1rem}.nav-list.open{display:flex}.nav-burger{display:block}}
+</style>
+
+<!-- ═══════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════ -->
+<section id="home" style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;padding:100px 2.5rem 3rem;text-align:center">
+  <canvas id="hero-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.55"></canvas>
+  <div id="scan-beam" style="position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(0,255,249,.55),transparent);box-shadow:0 0 18px rgba(0,255,249,.35);pointer-events:none;z-index:1;top:0"></div>
+
+  <div style="position:relative;z-index:2;max-width:860px;margin:0 auto">
+    <div style="display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.7rem;letter-spacing:3px;text-transform:uppercase;padding:6px 18px;border:1px solid var(--border);color:var(--muted);margin-bottom:1.8rem;animation:fadeInUp .5s both">
+      <span style="width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:var(--glow-cyan);animation:pulse 2s infinite"></span>
+      <span data-i18n="hero_badge">Web3.0 · Sepolia Testnet · Pre-Alpha</span>
+    </div>
+
+    <h1 style="font-family:var(--mono);font-weight:300;font-size:clamp(3rem,10vw,6.5rem);letter-spacing:6px;line-height:1.05;margin-bottom:1.5rem;animation:fadeInUp .6s .1s both;animation-fill-mode:both">
+      <span style="display:block;color:var(--text)" data-i18n="hero_title">PUFF-CHAIN</span>
+      <span class="grad" style="font-weight:700;letter-spacing:4px" data-i18n="hero_sub_title">PUFF2EARN</span>
+    </h1>
+
+    <p style="font-size:clamp(1rem,2.5vw,1.25rem);color:var(--muted);max-width:680px;margin:0 auto 2.5rem;line-height:1.9;animation:fadeInUp .7s .2s both;animation-fill-mode:both" data-i18n="hero_desc">
+      基于以太坊的 Web3.0 电子雾化数字生态平台 — 自主钱包 · NFT 数字藏品 · PUFF 代币激励 · 二维码产品链上溯源
+    </p>
+
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fadeInUp .8s .3s both;animation-fill-mode:both">
+      <a href="store.html" class="btn btn-primary" data-i18n="hero_cta1">选购产品 ▶</a>
+      <a href="#roadmap" class="btn btn-ghost" data-i18n="hero_cta2">商业愿景</a>
+      <a href="register.html" class="btn btn-ghost" data-i18n="hero_cta3">成为合作方</a>
+    </div>
+
+    <div style="display:flex;justify-content:center;margin-top:5rem;animation:fadeInUp .9s .45s both;animation-fill-mode:both">
+      <div style="display:flex;border:1px solid var(--border)">
+        <div class="stat-cell"><b id="sc-phases">3</b><span data-i18n="stat_phases">阶段</span></div>
+        <div class="stat-cell" style="border-left:1px solid var(--border)"><b id="sc-lines">4</b><span data-i18n="stat_lines">产品线</span></div>
+        <div class="stat-cell" style="border-left:1px solid var(--border)"><b id="sc-chain">ETH</b><span data-i18n="stat_chain">主链</span></div>
+        <div class="stat-cell" style="border-left:1px solid var(--border)"><b id="sc-nft">NFT</b><span data-i18n="stat_nft">藏品</span></div>
+      </div>
     </div>
   </div>
-  <div class="si"><span data-i="hero_sc">Scroll</span><div class="sl"></div></div>
+
+  <div style="position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;font-family:var(--mono);font-size:.6rem;letter-spacing:2px;color:var(--muted);text-transform:uppercase">
+    <span data-i18n="hero_scroll">Scroll</span>
+    <div style="width:1px;height:36px;background:linear-gradient(var(--cyan),transparent);animation:pulse 2s ease-in-out infinite"></div>
+  </div>
 </section>
 
-<section id="roadmap">
-  <div class="slb" data-i="rm_l">// ROADMAP</div>
-  <h2 class="st" data-i="rm_t">涓夐樁娈?路 <span>璺嚎</span></h2>
-  <div class="rm">
+<style>
+.stat-cell{text-align:center;padding:1.4rem 2.8rem;position:relative}
+.stat-cell::before{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,255,249,.04),transparent);pointer-events:none}
+.stat-cell b{display:block;font-size:2.2rem;font-family:var(--mono);color:var(--cyan);font-weight:700;letter-spacing:2px;text-shadow:var(--glow-cyan)}
+.stat-cell span{display:block;font-size:.65rem;color:var(--muted);letter-spacing:3px;text-transform:uppercase;font-family:var(--mono);margin-top:4px}
+@media(max-width:560px){.stat-cell{padding:.9rem 1.4rem}.stat-cell b{font-size:1.6rem}}
+</style>
+
+<!-- ═══════════════════════════════════════════
+     ROADMAP
+═══════════════════════════════════════════ -->
+<section id="roadmap" style="padding:6rem 2.5rem;max-width:1100px;margin:0 auto;position:relative">
+  <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:80%;height:1px;background:linear-gradient(90deg,transparent,var(--cyan-dim),var(--magenta-dim),transparent);opacity:.3"></div>
+  <div style="font-family:var(--mono);font-size:.7rem;letter-spacing:4px;color:var(--cyan);text-transform:uppercase;margin-bottom:.6rem;display:flex;align-items:center;gap:8px">
+    <span style="color:var(--magenta);opacity:.7">//</span>
+    <span data-i18n="road_tag">ROADMAP</span>
+    <span style="display:inline-block;width:24px;height:1px;background:var(--cyan);opacity:.5"></span>
+  </div>
+  <h2 style="font-family:var(--mono);font-weight:300;font-size:clamp(1.5rem,4vw,2.4rem);letter-spacing:3px;margin-bottom:3rem">
+    <span data-i18n="road_title">三阶段 · </span><span style="color:var(--cyan)" data-i18n="road_title2">路线</span>
+  </h2>
+  <div style="position:relative;display:flex;flex-direction:column;gap:1.5rem;padding-left:2rem">
+    <div style="position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(var(--cyan),var(--purple),var(--magenta));box-shadow:0 0 10px rgba(0,255,249,.3)"></div>
     <div class="rm-item">
-      <span class="tag" data-i="rm_p1s">ALPHA</span>
-      <h3 data-i="rm_p1h">灏侀棴閽卞寘 路 绀剧兢闂幆</h3>
+      <span class="rm-tag" data-i18n="road_p1_tag">ALPHA</span>
+      <h3 data-i18n="road_p1_h">封闭钱包 · 社区冷启动</h3>
       <ul>
-        <li data-i="rm_p1a">绯荤粺鑷富鐢熸垚閽卞寘锛岀ぞ缇ゅ唴閮ㄦ祦閫?/li>
-        <li data-i="rm_p1b">涓嶉潰鍚戝叕閾惧競鍦猴紝涓撴敞绀剧兢鍐峰惎鍔?/li>
-        <li data-i="rm_p1c">浜岀淮鐮佹壂鐮佹敞鍐?鐧诲綍 路 绀句氦灞炴€?路 绉垎娴佽浆</li>
-        <li data-i="rm_p1d">闈㈠悜娑堣垂鑰呬笌鐢靛瓙鐑?Web3.0 鍚堜綔鏂?/li>
+        <li data-i18n="road_p1_a">系统自主生成钱包，社区内部流通</li>
+        <li data-i18n="road_p1_b">不面向公链市场，专注社区冷启动</li>
+        <li data-i18n="road_p1_c">二维码扫码注册/登录 · 社交属性 · 积分流转</li>
+        <li data-i18n="road_p1_d">面向消费者与电子烟 Web3.0 合作方</li>
       </ul>
     </div>
     <div class="rm-item">
-      <span class="tag" data-i="rm_p2s">BETA</span>
-      <h3 data-i="rm_p2h">鍏摼鎺ュ叆 路 NFT 閾搁€?/h3>
+      <span class="rm-tag" style="border-color:var(--purple);color:var(--purple)" data-i18n="road_p2_tag">BETA</span>
+      <h3 data-i18n="road_p2_h">公链接入 · NFT 铸造</h3>
       <ul>
-        <li data-i="rm_p2a">寮曞叆浠ュお鍧婂叕閾鹃挶鍖?/li>
-        <li data-i="rm_p2b">NFT 鏁板瓧钘忓搧閾搁€犱笌灞曠ず 路 鎵爜閾搁€?/li>
-        <li data-i="rm_p2c">鍖哄潡閾剧ぞ缇や氦鏄撲笌璐ㄦ娂</li>
-        <li data-i="rm_p2d">浜岀淮鐮佷骇鍝佹函婧愪笂閾?/li>
+        <li data-i18n="road_p2_a">引入以太坊公链钱包</li>
+        <li data-i18n="road_p2_b">NFT 数字藏品铸造与展示 · 扫码铸造</li>
+        <li data-i18n="road_p2_c">区块链社区交易与质押</li>
+        <li data-i18n="road_p2_d">二维码产品溯源上链</li>
       </ul>
     </div>
     <div class="rm-item">
-      <span class="tag" data-i="rm_p3s">MAINNET</span>
-      <h3 data-i="rm_p3h">浠ｅ竵婵€鍔?路 鍏ㄩ潰寮€鏀?/h3>
+      <span class="rm-tag" style="border-color:var(--magenta);color:var(--magenta)" data-i18n="road_p3_tag">MAINNET</span>
+      <h3 data-i18n="road_p3_h">代币激励 · 全面开放</h3>
       <ul>
-        <li data-i="rm_p3a">鏍规嵁鎸佹湁铏氭嫙璧勪骇鍋氫唬甯佹縺鍔?/li>
-        <li data-i="rm_p3b">浜岀淮鐮佸叏閾捐矾婧簮 + 浜у搧鏁板瓧瀛敓</li>
-        <li data-i="rm_p3c">Web3.0 鍖哄煙鍚堜綔鏂圭綉缁滃叏鐞冩嫇灞?/li>
-        <li data-i="rm_p3d">閫愭閲婃斁鍏摼甯傚満锛岀敤鎴烽┍鍔?/li>
+        <li data-i18n="road_p3_a">根据持有虚拟资产做代币激励</li>
+        <li data-i18n="road_p3_b">二维码全链路溯源 + 产品数字孪生</li>
+        <li data-i18n="road_p3_c">Web3.0 区域合作方网络全球扩张</li>
+        <li data-i18n="road_p3_d">逐步释放公链市场，用户驱动</li>
       </ul>
     </div>
   </div>
 </section>
 
-<section id="nft">
-  <div class="slb" data-i="nf_l">// NFT</div>
-  <h2 class="st" data-i="nf_t">鏁板瓧 路 <span>钘忓搧</span></h2>
-  <div class="ng">
-    <div class="nc"><div class="nv"><div class="go"></div><div class="ph">&loz; 001</div></div><div class="ni"><h4>GENESIS &middot; <span data-i="nf_n1">鍒濆彿</span></h4><div class="m"><span>#001</span><span class="pr" data-i="nf_un">鏈摳閫?/span></div></div></div>
-    <div class="nc"><div class="nv"><div class="go"></div><div class="ph">&loz; 002</div></div><div class="ni"><h4>CYBER CLOUD &middot; <span data-i="nf_n2">璧涘崥浜?/span></h4><div class="m"><span>#002</span><span class="pr" data-i="nf_un">鏈摳閫?/span></div></div></div>
-    <div class="nc"><div class="nv"><div class="go"></div><div class="ph">&loz; 003</div></div><div class="ni"><h4>NEON DROP &middot; <span data-i="nf_n3">闇撹櫣闆炬淮</span></h4><div class="m"><span>#003</span><span class="pr" data-i="nf_un">鏈摳閫?/span></div></div></div>
-    <div class="nc"><div class="nv"><div class="go"></div><div class="ph">&loz; 004</div></div><div class="ni"><h4>PUFF GENESIS NFT</h4><div class="m"><span data-i="nf_lm">闄愬畾</span><span class="pr" data-i="nf_so">鍗冲皢閾搁€?/span></div></div></div>
+<style>
+.rm-item{padding-left:1.2rem;border-left:2px solid var(--border);margin-bottom:1rem;transition:.3s}
+.rm-item:hover{border-left-color:var(--cyan)}
+.rm-tag{display:inline-block;font-family:var(--mono);font-size:.55rem;letter-spacing:2px;padding:2px 10px;border:1px solid var(--cyan);color:var(--cyan);border-radius:2px;margin-bottom:.5rem;background:rgba(0,255,249,.05)}
+.rm-item h3{font-family:var(--mono);font-weight:400;font-size:1rem;letter-spacing:1px;margin-bottom:.5rem;color:var(--text)}
+.rm-item ul{padding-left:1.2rem}
+.rm-item ul li{color:var(--muted);font-size:.85rem;line-height:1.9;list-style:disc}
+</style>
+
+<!-- NFT -->
+<section id="nft" style="padding:6rem 2.5rem;max-width:1100px;margin:0 auto;position:relative">
+  <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:80%;height:1px;background:linear-gradient(90deg,transparent,var(--cyan-dim),var(--magenta-dim),transparent);opacity:.3"></div>
+  <div style="font-family:var(--mono);font-size:.7rem;letter-spacing:4px;color:var(--cyan);text-transform:uppercase;margin-bottom:.6rem;display:flex;align-items:center;gap:8px">
+    <span style="color:var(--magenta);opacity:.7">//</span><span data-i18n="nft_tag">NFT</span>
+  </div>
+  <h2 style="font-family:var(--mono);font-weight:300;font-size:clamp(1.5rem,4vw,2.4rem);letter-spacing:3px;margin-bottom:3rem">
+    数字 · <span style="color:var(--cyan)" data-i18n="nft_title">藏品</span>
+  </h2>
+  <div class="nft-grid">
+    <div class="nft-card"><div class="nft-art"><div class="nft-glow"></div><div class="nft-id">◆ 001</div></div><div class="nft-info"><h4>GENESIS · <span data-i18n="nft_n1">创世号</span></h4><div class="nft-meta"><span>#001</span><span class="nft-badge" data-i18n="nft_unminted">未铸造</span></div></div></div>
+    <div class="nft-card"><div class="nft-art" style="--nc:var(--purple)"><div class="nft-glow"></div><div class="nft-id">◆ 002</div></div><div class="nft-info"><h4>CYBER CLOUD · <span data-i18n="nft_n2">赛博云</span></h4><div class="nft-meta"><span>#002</span><span class="nft-badge" data-i18n="nft_unminted">未铸造</span></div></div></div>
+    <div class="nft-card"><div class="nft-art" style="--nc:var(--magenta)"><div class="nft-glow"></div><div class="nft-id">◆ 003</div></div><div class="nft-info"><h4>NEON DROP · <span data-i18n="nft_n3">霓虹雾维</span></h4><div class="nft-meta"><span>#003</span><span class="nft-badge" style="border-color:var(--warn);color:var(--warn)" data-i18n="nft_soon">即将铸造</span></div></div></div>
+    <div class="nft-card"><div class="nft-art" style="--nc:#ff9900"><div class="nft-glow"></div><div class="nft-id">◆ GEN</div></div><div class="nft-info"><h4>PUFF GENESIS NFT</h4><div class="nft-meta"><span data-i18n="nft_limited">限定</span><span class="nft-badge" style="border-color:var(--good);color:var(--good)" data-i18n="nft_soon">即将铸造</span></div></div></div>
   </div>
 </section>
 
-<section id="trace">
-  <div class="slb" data-i="tr_l">// TRACE & MINT</div>
-  <h2 class="st" data-i="tr_t">浜岀淮鐮?路 杩芥函 路 <span>閾搁€?/span></h2>
-  <div class="qc">
-    <div><div class="ib qr"></div><h4 data-i="tr_c1h">浜岀淮鐮佷骇鍝佹函婧?/h4><p data-i="tr_c1d">姣忎竴浠朵骇鍝佹嫢鏈夊敮涓€鏁板瓧韬唤锛屾壂鐮佸嵆鏌ュ叏閾捐矾淇℃伅</p></div>
-    <div><div class="ib ch"></div><h4 data-i="tr_c2h">鎵爜閾搁€?NFT</h4><p data-i="tr_c2d">娑堣垂鑰呮壂鐮佸嵆鍙皢浜у搧鏁板瓧瀛敓閾搁€犱负閾句笂 NFT</p></div>
-    <div><div class="ib ch"></div><h4 data-i="tr_c3h">鍖哄潡閾惧睍绀?/h4><p data-i="tr_c3d">鎵€鏈夋函婧愭暟鎹笌 NFT 瀛樺偍浜庝互澶潑锛屽叕寮€鍙煡</p></div>
+<style>
+.nft-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
+.nft-card{background:var(--panel);border:1px solid var(--border);border-radius:8px;overflow:hidden;transition:.3s;cursor:pointer}
+.nft-card:hover{border-color:var(--cyan);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.5),0 0 20px rgba(0,255,249,.08)}
+.nft-art{aspect-ratio:1;display:grid;place-items:center;background:radial-gradient(circle at 50% 40%,var(--panel-2),var(--bg));position:relative;overflow:hidden;--nc:var(--cyan)}
+.nft-glow{position:absolute;inset:0;background:conic-gradient(from 0deg,transparent 340deg,rgba(0,255,249,.12) 350deg,transparent 360deg);animation:spin360 7s linear infinite}
+.nft-id{font-family:var(--mono);font-size:2.5rem;color:var(--nc);text-shadow:0 0 20px var(--nc);position:relative;font-weight:700}
+.nft-info{padding:14px 16px}
+.nft-info h4{font-family:var(--mono);font-size:.82rem;font-weight:400;letter-spacing:1px;margin-bottom:.5rem;color:var(--text)}
+.nft-meta{display:flex;align-items:center;justify-content:space-between}
+.nft-meta span{font-family:var(--mono);font-size:.6rem;color:var(--muted)}
+.nft-badge{font-family:var(--mono);font-size:.5rem;letter-spacing:1px;padding:2px 8px;border:1px solid var(--cyan-dim);color:var(--cyan);border-radius:2px}
+</style>
+
+<!-- TRACE -->
+<section id="trace" style="padding:6rem 2.5rem;max-width:1100px;margin:0 auto;position:relative">
+  <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:80%;height:1px;background:linear-gradient(90deg,transparent,var(--cyan-dim),var(--magenta-dim),transparent);opacity:.3"></div>
+  <div style="font-family:var(--mono);font-size:.7rem;letter-spacing:4px;color:var(--cyan);text-transform:uppercase;margin-bottom:.6rem;display:flex;align-items:center;gap:8px">
+    <span style="color:var(--magenta);opacity:.7">//</span><span data-i18n="trace_tag">TRACE &amp; MINT</span>
   </div>
-  <div class="fw">
-    <span class="s ac" data-i="tr_f1">鎵爜浜у搧</span><span class="ar">&rarr;</span>
-    <span class="s" data-i="tr_f2">鏌ョ湅婧簮</span><span class="ar">&rarr;</span>
-    <span class="s" data-i="tr_f3">閾搁€?NFT</span><span class="ar">&rarr;</span>
-    <span class="s" data-i="tr_f4">閾句笂瀛樿瘉</span><span class="ar">&rarr;</span>
-    <span class="s" data-i="tr_f5">鎸佹湁娴佽浆</span>
+  <h2 style="font-family:var(--mono);font-weight:300;font-size:clamp(1.5rem,4vw,2.4rem);letter-spacing:3px;margin-bottom:2.5rem">
+    二维码 · 追溯 · <span style="color:var(--cyan)" data-i18n="trace_title">铸造</span>
+  </h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem;margin-bottom:2.5rem">
+    <div class="trace-card"><div class="trace-icon">🔍</div><h4 data-i18n="trace_c1h">二维码产品溯源</h4><p data-i18n="trace_c1d">每一件产品拥有唯一数字身份，扫码即查全链路信息</p></div>
+    <div class="trace-card"><div class="trace-icon">⛓️</div><h4 data-i18n="trace_c2h">扫码铸造 NFT</h4><p data-i18n="trace_c2d">消费者扫码即可将产品数字孪生铸造为链上 NFT</p></div>
+    <div class="trace-card"><div class="trace-icon">🌐</div><h4 data-i18n="trace_c3h">区块链展示</h4><p data-i18n="trace_c3d">所有溯源数据与 NFT 存储于以太坊，公开可查</p></div>
+  </div>
+  <div style="display:flex;align-items:center;flex-wrap:wrap;gap:0;background:var(--panel);border:1px solid var(--border);border-radius:8px;overflow:hidden">
+    <div class="flow-step active" data-i18n="trace_f1">扫描产品</div><div class="flow-arrow">→</div>
+    <div class="flow-step" data-i18n="trace_f2">查看溯源</div><div class="flow-arrow">→</div>
+    <div class="flow-step" data-i18n="trace_f3">铸造 NFT</div><div class="flow-arrow">→</div>
+    <div class="flow-step" data-i18n="trace_f4">链上存证</div><div class="flow-arrow">→</div>
+    <div class="flow-step" data-i18n="trace_f5">持有流转</div>
   </div>
 </section>
 
-<section id="store">
-  <div class="slb" data-i="st_l">// STORE</div>
-  <h2 class="st" data-i="st_t">浜у搧 路 <span>鍟嗗簵</span></h2>
-  <div class="sg">
-    <div class="pdc"><div class="pv"><span class="badge nft">NFT</span>PUFF-X1</div><div class="pi"><h4>PUFF-X1 &middot; <span data-i="st_p1n">鍒濅唬闆惧寲鍣?/span></h4><p class="desc" data-i="st_p1d">棣栨缁戝畾 Web3.0 鏁板瓧韬唤鐨勬櫤鑳介浘鍖栬澶?/p><div class="br"><span class="prc">楼 299</span><button class="bb" data-i="st_b">璐拱</button></div></div></div>
-    <div class="pdc"><div class="pv"><span class="badge lt" data-i="st_lm">闄愬畾</span>CYBER-POD</div><div class="pi"><h4>CYBER-POD &middot; <span data-i="st_p2n">璧涘崥鐑熷脊</span></h4><p class="desc" data-i="st_p2d">璧涘崥鏈嬪厠涓婚闄愬畾鐑熷脊锛屽惈 NFT 绌烘姇璧勬牸</p><div class="br"><span class="prc">楼 89</span><button class="bb" data-i="st_b">璐拱</button></div></div></div>
-    <div class="pdc"><div class="pv">NEON-KIT</div><div class="pi"><h4>NEON KIT &middot; <span data-i="st_p3n">闇撹櫣濂楄</span></h4><p class="desc" data-i="st_p3d">闆惧寲鍣?+ 鐑熷脊 + 鍒涗笘 NFT锛屽叆闂?Web3.0</p><div class="br"><span class="prc">楼 499</span><button class="bb" data-i="st_b">璐拱</button></div></div></div>
-    <div class="pdc"><div class="pv"><span class="badge nft">NFT</span>PUFF-MAX</div><div class="pi"><h4>PUFF-MAX &middot; <span data-i="st_p4n">鏃楄埌鐗?/span></h4><p class="desc" data-i="st_p4d">鏃楄埌闆惧寲璁惧锛屽唴缃尯鍧楅摼鑺墖</p><div class="br"><span class="prc">楼 699</span><button class="bb" data-i="st_b">璐拱</button></div></div></div>
+<style>
+.trace-card{padding:1.5rem;background:var(--panel);border:1px solid var(--border);border-radius:8px;transition:.25s}
+.trace-card:hover{border-color:var(--cyan)}
+.trace-icon{font-size:1.6rem;margin-bottom:.8rem}
+.trace-card h4{font-family:var(--mono);font-size:.85rem;font-weight:400;letter-spacing:1px;margin-bottom:.4rem;color:var(--cyan)}
+.trace-card p{color:var(--muted);font-size:.8rem;line-height:1.7}
+.flow-step{flex:1;min-width:100px;text-align:center;padding:1rem .5rem;font-family:var(--mono);font-size:.7rem;letter-spacing:1px;color:var(--muted);transition:.2s}
+.flow-step.active{color:var(--cyan);background:rgba(0,255,249,.06)}
+.flow-arrow{color:var(--cyan);font-size:1.1rem;opacity:.6;flex-shrink:0}
+</style>
+
+<!-- ECO -->
+<section id="eco" style="padding:6rem 2.5rem;max-width:1100px;margin:0 auto;position:relative">
+  <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:80%;height:1px;background:linear-gradient(90deg,transparent,var(--cyan-dim),var(--magenta-dim),transparent);opacity:.3"></div>
+  <div style="font-family:var(--mono);font-size:.7rem;letter-spacing:4px;color:var(--cyan);text-transform:uppercase;margin-bottom:.6rem;display:flex;align-items:center;gap:8px">
+    <span style="color:var(--magenta);opacity:.7">//</span><span>ECOSYSTEM</span>
+  </div>
+  <h2 style="font-family:var(--mono);font-weight:300;font-size:clamp(1.5rem,4vw,2.4rem);letter-spacing:3px;margin-bottom:3rem">
+    代币 · 交易 · <span style="color:var(--cyan)">激励</span>
+  </h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem">
+    <div class="eco-card"><div class="eco-icon">🪙</div><h4>TOKEN 激励</h4><p>根据持有虚拟资产分配生态代币</p></div>
+    <div class="eco-card"><div class="eco-icon">◈</div><h4>社区交易</h4><p>P2P 数字藏品交易，智能合约结算</p></div>
+    <div class="eco-card"><div class="eco-icon">🔒</div><h4>质押收益</h4><p>锁定代币获得平台权益与收益</p></div>
+    <div class="eco-card"><div class="eco-icon">🌍</div><h4>合作方网络</h4><p>面向电子烟 Web3.0 区域合作方</p></div>
   </div>
 </section>
 
-<section id="eco">
-  <div class="slb" data-i="ec_l">// ECOSYSTEM</div>
-  <h2 class="st" data-i="ec_t">浠ｅ竵 路 浜ゆ槗 路 <span>婵€鍔?/span></h2>
-  <div class="eg">
-    <div class="ec"><div class="ic">鈾?/div><h4 data-i="ec_c1h">TOKEN 婵€鍔?/h4><p data-i="ec_c1d">鏍规嵁鎸佹湁铏氭嫙璧勪骇鍒嗛厤鐢熸€佷唬甯?/p></div>
-    <div class="ec"><div class="ic">鈼?/div><h4 data-i="ec_c2h">绀剧兢浜ゆ槗</h4><p data-i="ec_c2d">P2P 鏁板瓧钘忓搧浜ゆ槗锛屾櫤鑳藉悎绾︾粨绠?/p></div>
-    <div class="ec"><div class="ic">鈾?/div><h4 data-i="ec_c3h">璐ㄦ娂姹?/h4><p data-i="ec_c3d">閿佸畾浠ｅ竵鑾峰緱骞冲彴鏉冪泭涓庢敹鐩?/p></div>
-    <div class="ec"><div class="ic">鈾?/div><h4 data-i="ec_c4h">鍚堜綔鏂圭綉缁?/h4><p data-i="ec_c4d">闈㈠悜鐢靛瓙鐑?Web3.0 鍖哄煙鍚堜綔鏂?/p></div>
+<style>
+.eco-card{padding:1.6rem;background:var(--panel);border:1px solid var(--border);border-radius:8px;transition:.25s;text-align:center}
+.eco-card:hover{border-color:var(--cyan);transform:translateY(-3px)}
+.eco-icon{font-size:1.8rem;margin-bottom:.8rem;display:block;filter:drop-shadow(0 0 8px rgba(0,255,249,.4))}
+.eco-card h4{font-family:var(--mono);font-size:.82rem;font-weight:500;letter-spacing:1px;margin-bottom:.4rem;color:var(--cyan)}
+.eco-card p{color:var(--muted);font-size:.78rem;line-height:1.7}
+</style>
+
+<!-- PARTNER -->
+<section id="partner" style="padding:6rem 2.5rem;max-width:1100px;margin:0 auto;position:relative">
+  <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:80%;height:1px;background:linear-gradient(90deg,transparent,var(--cyan-dim),var(--magenta-dim),transparent);opacity:.3"></div>
+  <div style="font-family:var(--mono);font-size:.7rem;letter-spacing:4px;color:var(--cyan);text-transform:uppercase;margin-bottom:.6rem;display:flex;align-items:center;gap:8px">
+    <span style="color:var(--magenta);opacity:.7">//</span><span>PARTNERS</span>
+  </div>
+  <h2 style="font-family:var(--mono);font-weight:300;font-size:clamp(1.5rem,4vw,2.4rem);letter-spacing:3px;margin-bottom:3rem">
+    合作方 · <span style="color:var(--cyan)">招募</span>
+  </h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;margin-bottom:3rem">
+    <div class="partner-card"><div style="font-size:1.3rem;margin-bottom:.6rem">🌏</div><h4>区域合作方</h4><span class="rm-tag">RECRUITING</span><ul style="padding-left:1.2rem;margin-top:.8rem"><li>区域独家运营权</li><li>享受平台交易分红</li><li>专属合作方 NFT 身份</li><li>优先参与公链治理</li></ul></div>
+    <div class="partner-card"><div style="font-size:1.3rem;margin-bottom:.6rem">◈</div><h4>品牌合作方</h4><span class="rm-tag" style="border-color:var(--purple);color:var(--purple)">PARTNER</span><ul style="padding-left:1.2rem;margin-top:.8rem"><li>产品链上溯源 + NFT 绑定</li><li>品牌数字资产发行</li><li>共享用户社区基础设施</li><li>联合营销活动支持</li></ul></div>
+    <div class="partner-card"><div style="font-size:1.3rem;margin-bottom:.6rem">⬡</div><h4>节点合作方</h4><span class="rm-tag" style="border-color:var(--muted);color:var(--muted)">COMING SOON</span><ul style="padding-left:1.2rem;margin-top:.8rem"><li>运行生态节点参与共识</li><li>获取代币区块奖励</li><li>链上治理投票权</li><li>生态基金优先资助</li></ul></div>
+  </div>
+  <div style="text-align:center;max-width:560px;margin:0 auto">
+    <h3 style="font-family:var(--mono);font-weight:400;font-size:1.2rem;letter-spacing:1px;margin-bottom:.8rem">加入 PUFF-CHAIN 合作方网络</h3>
+    <p style="color:var(--muted);font-size:.82rem;margin-bottom:1.5rem">填写合作申请表，我们将在 48 小时内与您联系</p>
+    <a href="register.html" class="btn btn-primary">申请合作 ▶</a>
   </div>
 </section>
 
-<section id="partner">
-  <div class="slb" data-i="pa_l">// PARTNERS</div>
-  <h2 class="st" data-i="pa_t">鍚堜紮浜?路 <span>鎷涘嫙</span></h2>
-  <div class="pg">
-    <div class="pt"><div class="ti">鈾?/div><h4 data-i="pa_c1h">鍖哄煙鍚堜紮浜?/h4><span class="tag" data-i="pa_c1tag">RECRUITING</span><ul><li data-i="pa_c1a">鍖哄煙鐙杩愯惀鏉?/li><li data-i="pa_c1b">浜彈骞冲彴浜ゆ槗鍒嗙孩</li><li data-i="pa_c1c">涓撳睘鍚堜紮浜?NFT 韬唤</li><li data-i="pa_c1d">浼樺厛鍙備笌鍏摼娌荤悊</li></ul></div>
-    <div class="pt"><div class="ti">鈼?/div><h4 data-i="pa_c2h">鍝佺墝鍚堜綔鏂?/h4><span class="tag cy" data-i="pa_c2tag">PARTNER</span><ul><li data-i="pa_c2a">浜у搧閾句笂婧簮 + NFT 缁戝畾</li><li data-i="pa_c2b">鍝佺墝鏁板瓧璧勪骇鍙戣</li><li data-i="pa_c2c">鍏变韩鐢ㄦ埛绀剧兢鍩虹璁炬柦</li><li data-i="pa_c2d">鑱斿悎钀ラ攢娲诲姩鏀寔</li></ul></div>
-    <div class="pt"><div class="ti">鈾?/div><h4 data-i="pa_c3h">鑺傜偣鍚堜紮浜?/h4><span class="tag" data-i="pa_c3tag">COMING SOON</span><ul><li data-i="pa_c3a">杩愯鐢熸€佽妭鐐瑰弬涓庡叡璇?/li><li data-i="pa_c3b">鑾峰彇浠ｅ竵鍖哄潡濂栧姳</li><li data-i="pa_c3c">閾句笂娌荤悊鎶曠エ鏉?/li><li data-i="pa_c3d">鐢熸€佸熀閲戜紭鍏堣祫鍔?/li></ul></div>
+<style>
+.partner-card{padding:1.5rem;background:var(--panel);border:1px solid var(--border);border-radius:8px;transition:.25s}
+.partner-card:hover{border-color:var(--cyan)}
+.partner-card h4{font-family:var(--mono);font-size:.85rem;font-weight:400;letter-spacing:1px;margin-bottom:.4rem;color:var(--text)}
+.partner-card ul li{color:var(--muted);font-size:.8rem;line-height:1.9;list-style:disc}
+</style>
+
+
+<!-- ACCESS / QR -->
+<section id="access" style="padding:6rem 2.5rem;max-width:1100px;margin:0 auto;position:relative">
+  <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:80%;height:1px;background:linear-gradient(90deg,transparent,var(--cyan-dim),var(--magenta-dim),transparent);opacity:.3"></div>
+  <div style="font-family:var(--mono);font-size:.7rem;letter-spacing:4px;color:var(--cyan);text-transform:uppercase;margin-bottom:.6rem;display:flex;align-items:center;gap:8px">
+    <span style="color:var(--magenta);opacity:.7">//</span><span>ACCESS</span>
   </div>
-  <div class="pca"><h3 data-i="pa_cta">鍔犲叆 PUFF-CHAIN 鍚堜紮浜虹綉缁?/h3><p data-i="pa_ctap">濉啓鍚堜綔鐢宠琛紝鎴戜滑灏嗗湪 48 灏忔椂鍐呬笌鎮ㄨ仈绯?/p><a href="register.html" class="btn bp" data-i="pa_ctab">鐢宠鍚堜綔 鈻?/a></div>
+  <h2 style="font-family:var(--mono);font-weight:300;font-size:clamp(1.5rem,4vw,2.4rem);letter-spacing:3px;margin-bottom:1rem">
+    扫码 · <span style="color:var(--cyan)">接入</span>
+  </h2>
+  <p style="color:var(--muted);font-size:.88rem;max-width:560px;margin:0 auto 3rem;text-align:center;line-height:1.8">
+    消费者与合作方通过二维码扫码快速注册、登录，一步进入 Web3.0 数字雾化生态。
+  </p>
+  <div style="display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap">
+    <div class="qr-item"><div id="qr-scan" class="qr-box"></div><div class="qr-label"><span>扫码验证</span><small>scan.html</small></div></div>
+    <div class="qr-item"><div id="qr-reg" class="qr-box"></div><div class="qr-label"><span>注册账号</span><small>register.html</small></div></div>
+    <div class="qr-item"><div id="qr-login" class="qr-box"></div><div class="qr-label"><span>扫码登录</span><small>register.html?qr=1</small></div></div>
+  </div>
 </section>
 
-<section id="vision">
-  <div class="slb" data-i="vi_l">// VISION</div>
-  <h2 class="st" data-i="vi_t">鍟嗕笟 路 <span>鎰挎櫙</span></h2>
-  <div class="vc">
-    <div class="t"><p data-i="vi_p1">PUFF-CHAIN 鑷村姏浜庢垚涓哄叏鐞冮涓?Web3.0 鐢靛瓙闆惧寲鏁板瓧鐢熸€佸钩鍙般€傞€氳繃鍖哄潡閾炬妧鏈噸鏋勭數瀛愮儫琛屼笟鐨勬秷璐逛綋楠屼笌浠峰€煎垎閰嶃€?/p><p data-i="vi_p2">浠庝骇鍝佹函婧愬埌鏁板瓧钘忓搧锛屼粠浠ｅ竵婵€鍔卞埌鍚堜紮浜虹綉缁滐紝鏋勫缓娑堣垂鑰呫€佸搧鐗屾柟銆佸悎浣滄柟涓夋柟鍏辫耽鐨勫幓涓績鍖栫敓鎬併€?/p><p data-i="vi_p3">绗竴闃舵绀剧兢鍐峰惎鍔紝绗簩闃舵鍏摼 NFT 涓庝氦鏄擄紝绗笁闃舵浠ｅ竵椹卞姩鍏ㄧ悆鎵╁紶銆?/p></div>
-    <div class="vs"><div class="vs2"><div class="n">3</div><div class="l">闃舵</div></div><div class="vs2"><div class="n">4</div><div class="l">浜у搧绾?/div></div><div class="vs2"><div class="n">ETH</div><div class="l">涓婚摼</div></div><div class="vs2"><div class="n">NFT</div><div class="l">钘忓搧</div></div></div>
-  </div>
-</section>
+<style>
+.qr-item{display:flex;flex-direction:column;align-items:center;gap:12px}
+.qr-box{width:140px;height:140px;background:#fff;border-radius:8px;padding:8px;display:grid;place-items:center;box-shadow:0 0 20px rgba(0,255,249,.35),0 0 0 1px rgba(0,255,249,.15)}
+.qr-label{text-align:center}
+.qr-label span{display:block;font-family:var(--mono);font-size:.7rem;letter-spacing:1px;color:var(--text)}
+.qr-label small{display:block;font-family:var(--mono);font-size:.55rem;color:var(--muted);letter-spacing:1px;margin-top:3px;opacity:.6}
+</style>
 
-<section id="access">
-  <div class="slb" data-i="ac_l">// ACCESS</div>
-  <h2 class="st" data-i="ac_t">鎵爜 路 <span>鎺ュ叆</span></h2>
-  <div class="ql"><p data-i="ac_p">娑堣垂鑰呬笌鍚堜綔鏂归€氳繃浜岀淮鐮佹壂鐮佸揩閫熸敞鍐?鐧诲綍锛屼竴姝ヨ繘鍏?Web3.0 鏁板瓧闆惧寲鐢熸€併€?/p><div class="qrs"><div class="qr-item"><div id="qr-scan"></div><div class="qr-label"><span data-i="ac_q1">扫码验证</span><small>scan.html</small></div></div><div class="qr-item"><div id="qr-reg"></div><div class="qr-label"><span data-i="ac_q2">注册账号</span><small>register.html</small></div></div><div class="qr-item"><div id="qr-login"></div><div class="qr-label"><span data-i="ac_q3">扫码登录</span><small>register.html?qr=1</small></div></div></div><span data-i="ac_q1">鎵爜楠岃瘉</span></a><a href="register.html" class="qr-link"><div class="qr-icon-wrap">馃懁</div><span data-i="ac_q2">娉ㄥ唽璐﹀彿</span></a><a href="register.html?qr=1" class="qr-link"><div class="qr-icon-wrap">馃攼</div><span data-i="ac_q3">鎵爜鐧诲綍</span></a></div></div>
-</section>
-
-<footer>
-  <div><span style="font-family:var(--mono);color:var(--cyan);letter-spacing:2px">PUFF-CHAIN</span><span style="color:var(--gray);margin-left:8px" data-i="ft"> 路 Web3.0 鏁板瓧闆惧寲鐢熸€?/span></div>
-  <div style="display:flex;gap:1.5rem;font-family:var(--mono);font-size:0.65rem;letter-spacing:1px">
-    <a href="https://github.com/PUFF2EARN/puff2earn.github.io" target="_blank" style="color:var(--gray)" data-i="ft_wp">Github</a>
-    <a href="https://github.com/PUFF2EARN/puff2earn.github.io" target="_blank" style="color:var(--gray)">Github</a>
-    <a href="https://discord.gg/puffchain" target="_blank" style="color:var(--gray)">Discord</a>
+<!-- FOOTER -->
+<footer style="border-top:1px solid var(--border);padding:3rem 2.5rem 2rem;margin-top:2rem;position:relative">
+  <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),var(--magenta),var(--cyan),transparent);opacity:.35"></div>
+  <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem">
+    <div>
+      <span style="font-family:var(--mono);color:var(--cyan);letter-spacing:3px;font-size:1rem">PUFF-CHAIN</span>
+      <span style="color:var(--muted);margin-left:8px;font-size:.82rem">· Web3.0 数字雾化生态</span>
+    </div>
+    <div style="display:flex;gap:1.5rem;font-family:var(--mono);font-size:.65rem;letter-spacing:1px">
+      <a href="about.html" style="color:var(--muted)">关于我们</a>
+      <a href="https://github.com/PUFF2EARN/puff2earn.github.io" target="_blank" style="color:var(--muted)">GitHub</a>
+      <a href="https://discord.gg/puffchain" target="_blank" style="color:var(--muted)">Discord</a>
+    </div>
+    <div style="color:var(--muted);font-size:.55rem;font-family:var(--mono);letter-spacing:1px">© 2026 PUFF-CHAIN · Built on Ethereum</div>
   </div>
-  <div style="color:var(--gray);font-size:0.55rem;font-family:var(--mono)" data-i="ft_yr">漏 2026 PUFF-CHAIN 路 Built on Ethereum</div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
-var i18n=JSON.parse(document.getElementById("i18n-json").textContent);
-var cur="zh";
-function sw(l){
-  cur=l;
-  document.querySelectorAll("[data-i]").forEach(function(el){
-    var k=el.getAttribute("data-i");
-    if(i18n[l]&&i18n[l][k]){
-      var t=i18n[l][k];
-      if(t.indexOf("<")>=0){el.innerHTML=t}else{el.textContent=t}
-    }
-  });
-  document.querySelectorAll("#bzh,#ben,#bko").forEach(function(b){b.classList.remove("a")});
-  document.getElementById("b"+l).classList.add("a");
-}
-sw("zh");new QRCode(document.getElementById("qr-scan"),{text:"https://puff2earn.com/scan.html",width:120,height:120,colorDark:"#00fff9",colorLight:"#0a0e1a",correctLevel:QRCode.CorrectLevel.H});new QRCode(document.getElementById("qr-reg"),{text:"https://puff2earn.com/register.html",width:120,height:120,colorDark:"#00fff9",colorLight:"#0a0e1a",correctLevel:QRCode.CorrectLevel.H});new QRCode(document.getElementById("qr-login"),{text:"https://puff2earn.com/register.html?qr=1",width:120,height:120,colorDark:"#00fff9",colorLight:"#0a0e1a",correctLevel:QRCode.CorrectLevel.H});new QRCode(document.getElementById("qr-scan"),{text:"https://puff2earn.com/scan.html",width:120,height:120,colorDark:"#00fff9",colorLight:"#0a0e1a",correctLevel:QRCode.CorrectLevel.H});new QRCode(document.getElementById("qr-reg"),{text:"https://puff2earn.com/register.html",width:120,height:120,colorDark:"#00fff9",colorLight:"#0a0e1a",correctLevel:QRCode.CorrectLevel.H});new QRCode(document.getElementById("qr-login"),{text:"https://puff2earn.com/register.html?qr=1",width:120,height:120,colorDark:"#00fff9",colorLight:"#0a0e1a",correctLevel:QRCode.CorrectLevel.H});
-</script>
+var LANG={zh:{hero_badge:"Web3.0 · Sepolia 测试网 · Pre-Alpha",hero_title:"PUFF-CHAIN",hero_sub_title:"PUFF2EARN",hero_desc:"基于以太坊的 Web3.0 电子雾化数字生态平台 — 自主钱包 · NFT 数字藏品 · PUFF 代币激励 · 二维码产品链上溯源",hero_cta1:"选购产品 ▶",hero_cta2:"商业愿景",hero_cta3:"成为合作方",stat_phases:"阶段",stat_lines:"产品线",stat_chain:"主链",stat_nft:"藏品",hero_scroll:"SCROLL",road_tag:"ROADMAP",road_title:"三阶段 · ",road_title2:"路线",road_p1_tag:"ALPHA",road_p1_h:"封闭钱包 · 社区冷启动",road_p1_a:"系统自主生成钱包，社区内部流通",road_p1_b:"不面向公链市场，专注社区冷启动",road_p1_c:"二维码扫码注册/登录 · 社交属性 · 积分流转",road_p1_d:"面向消费者与电子烟 Web3.0 合作方",road_p2_tag:"BETA",road_p2_h:"公链接入 · NFT 铸造",road_p2_a:"引入以太坊公链钱包",road_p2_b:"NFT 数字藏品铸造与展示 · 扫码铸造",road_p2_c:"区块链社区交易与质押",road_p2_d:"二维码产品溯源上链",road_p3_tag:"MAINNET",road_p3_h:"代币激励 · 全面开放",road_p3_a:"根据持有虚拟资产做代币激励",road_p3_b:"二维码全链路溯源 + 产品数字孪生",road_p3_c:"Web3.0 区域合作方网络全球扩张",road_p3_d:"逐步释放公链市场，用户驱动",nft_tag:"NFT",nft_title:"藏品",nft_n1:"创世号",nft_n2:"赛博云",nft_n3:"霓虹雾维",nft_unminted:"未铸造",nft_soon:"即将铸造",nft_limited:"限定",trace_tag:"TRACE & MINT",trace_title:"铸造",trace_c1h:"二维码产品溯源",trace_c1d:"每一件产品拥有唯一数字身份，扫码即查全链路信息",trace_c2h:"扫码铸造 NFT",trace_c2d:"消费者扫码即可将产品数字孪生铸造为链上 NFT",trace_c3h:"区块链展示",trace_c3d:"所有溯源数据与 NFT 存储于以太坊，公开可查",trace_f1:"扫描产品",trace_f2:"查看溯源",trace_f3:"铸造 NFT",trace_f4:"链上存证",trace_f5:"持有流转"},en:{hero_badge:"Web3.0 · Sepolia Testnet · Pre-Alpha",hero_title:"PUFF-CHAIN",hero_sub_title:"PUFF2EARN",hero_desc:"Ethereum-based Web3.0 vaping digital ecosystem — Self-custody wallet · NFT collectibles · PUFF token rewards · On-chain product tracing",hero_cta1:"Shop Now ▶",hero_cta2:"Our Vision",hero_cta3:"Become a Partner",stat_phases:"Phases",stat_lines:"Product Lines",stat_chain:"Chain",stat_nft:"NFTs",hero_scroll:"SCROLL",road_tag:"ROADMAP",road_title:"3 Phases · ",road_title2:"Route",road_p1_tag:"ALPHA",road_p1_h:"Closed Wallet · Cold Start",road_p1_a:"Auto-generated wallets, internal community circulation",road_p1_b:"Not public chain, focus on community bootstrapping",road_p1_c:"QR scan register/login · Social attributes · Points flow",road_p1_d:"For consumers & vape Web3.0 partners",road_p2_tag:"BETA",road_p2_h:"On-chain · NFT Minting",road_p2_a:"Integrate Ethereum public chain wallet",road_p2_b:"NFT collectible minting & display · QR mint",road_p2_c:"Blockchain community trading & staking",road_p2_d:"Product QR tracing on-chain",road_p3_tag:"MAINNET",road_p3_h:"Token Incentives · Full Open",road_p3_a:"Token incentives based on virtual asset holdings",road_p3_b:"Full-chain QR tracing + product digital twin",road_p3_c:"Web3.0 regional partner network global expansion",road_p3_d:"Gradual public chain market release, user-driven",nft_tag:"NFT",nft_title:"Collectibles",nft_n1:"Genesis",nft_n2:"Cyber Cloud",nft_n3:"Neon Drop",nft_unminted:"Unminted",nft_soon:"Coming Soon",nft_limited:"Limited",trace_tag:"TRACE & MINT",trace_title:"Mint",trace_c1h:"QR Product Tracing",trace_c1d:"Every product has a unique digital identity, scan to view full chain info",trace_c2h:"QR Mint NFT",trace_c2d:"Consumers scan to mint product digital twin as on-chain NFT",trace_c3h:"Blockchain Display",trace_c3d:"All trace data and NFTs stored on Ethereum, publicly verifiable",trace_f1:"Scan Product",trace_f2:"View Trace",trace_f3:"Mint NFT",trace_f4:"On-chain Record",trace_f5:"Transfer"},ko:{hero_badge:"Web3.0 · Sepolia 테스트넷 · Pre-Alpha",hero_title:"PUFF-CHAIN",hero_sub_title:"PUFF2EARN",hero_desc:"이더리움 기반 Web3.0 전자담배 디지털 생태계 — 자체 지갑 · NFT · PUFF 토큰 보상 · QR 온체인 추적",hero_cta1:"제품 구매 ▶",hero_cta2:"비즈니스 비전",hero_cta3:"파트너 신청",stat_phases:"단계",stat_lines:"제품 라인",stat_chain:"체인",stat_nft:"NFT",hero_scroll:"SCROLL",road_tag:"ROADMAP",road_title:"3단계 · ",road_title2:"로드맵",road_p1_tag:"ALPHA",road_p1_h:"폐쇄형 지갑 · 콜드 스타트",road_p1_a:"시스템 자동 지갑 생성, 내부 유통",road_p1_b:"공개 체인 미진출, 커뮤니티 부트스트래핑",road_p1_c:"QR 스캔 가입/로그인 · 소셜 · 포인트",road_p1_d:"소비자 및 파트너 대상",road_p2_tag:"BETA",road_p2_h:"온체인 연동 · NFT 민팅",road_p2_a:"이더리움 공개 체인 지갑 통합",road_p2_b:"NFT 민팅 및 전시 · QR 민팅",road_p2_c:"블록체인 거래 및 스테이킹",road_p2_d:"QR 제품 추적 온체인",road_p3_tag:"MAINNET",road_p3_h:"토큰 인센티브 · 전면 개방",road_p3_a:"가상 자산 보유량 기반 토큰 인센티브",road_p3_b:"전체 QR 추적 + 디지털 트윈",road_p3_c:"글로벌 파트너 네트워크 확장",road_p3_d:"공개 체인 단계적 개방",nft_tag:"NFT",nft_title:"수집품",nft_n1:"제네시스",nft_n2:"사이버 클라우드",nft_n3:"네온 드롭",nft_unminted:"미민팅",nft_soon:"출시 예정",nft_limited:"한정판",trace_tag:"TRACE & MINT",trace_title:"민팅",trace_c1h:"QR 제품 추적",trace_c1d:"모든 제품은 고유한 디지털 ID, QR 스캔으로 전체 체인 정보 조회",trace_c2h:"QR 민팅 NFT",trace_c2d:"소비자 QR 스캔으로 제품을 온체인 NFT로 민팅",trace_c3h:"블록체인 전시",trace_c3d:"이더리움에 저장, 공개 검증 가능",trace_f1:"제품 스캔",trace_f2:"추적 보기",trace_f3:"NFT 민팅",trace_f4:"온체인 기록",trace_f5:"전송"}};
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+var curLang=localStorage.getItem("puff-lang")||"zh";
+function setLang(l){curLang=l;localStorage.setItem("puff-lang",l);document.querySelectorAll("[data-i18n]").forEach(function(el){var k=el.getAttribute("data-i18n");if(LANG[l]&&LANG[l][k]!==undefined)el.textContent=LANG[l][k];});["zh","en","ko"].forEach(function(x){document.getElementById("l"+x).classList.toggle("active",x===l);});}
+setLang(curLang);
+function toggleNav(){document.getElementById("nav-list").classList.toggle("open");}
+
+(function(){if(typeof QRCode==="undefined")return;var base="https://puff2earn.com";var o={width:120,height:120,colorDark:"#00fff9",colorLight:"#0a0e1a",correctLevel:QRCode.CorrectLevel.H};new QRCode(document.getElementById("qr-scan"),Object.assign({},o,{text:base+"/scan.html"}));new QRCode(document.getElementById("qr-reg"),Object.assign({},o,{text:base+"/register.html"}));new QRCode(document.getElementById("qr-login"),Object.assign({},o,{text:base+"/register.html?qr=1"}));})();
+
+(function(){var cv=document.getElementById("hero-canvas");if(!cv)return;var ctx=cv.getContext("2d");var pts=[],W,H;function resize(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;}function init(){pts=[];for(var i=0;i<50;i++)pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,r:Math.random()*1.5+.5});}function draw(){ctx.clearRect(0,0,W,H);for(var i=0;i<pts.length;i++){var p=pts[i];p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle="rgba(0,255,249,.8)";ctx.fill();for(var j=i+1;j<pts.length;j++){var q=pts[j],dx=p.x-q.x,dy=p.y-q.y,d=Math.sqrt(dx*dx+dy*dy);if(d<130){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.strokeStyle="rgba(0,255,249,"+(1-d/130)*.15+")";ctx.lineWidth=.6;ctx.stroke();}}}requestAnimationFrame(draw);}resize();init();draw();window.addEventListener("resize",function(){resize();init();});})();
+
+(function(){var beam=document.getElementById("scan-beam");if(!beam)return;var pos=-5;setInterval(function(){pos+=.4;if(pos>108)pos=-5;beam.style.top=pos+"%";},16);})();
+</script>
 </body>
 </html>
-
